@@ -51,26 +51,43 @@
   // center on Scranton–Pittston area
   const map = L.map('map').setView([41.4, -75.7], 12);
 
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19
-  }).addTo(map);
+  let portalLayer = L.layerGroup().addTo(map);
 
-  async function loadPortals() {
-    const res = await fetch('/state');
-    const data = await res.json();
+async function loadPortals() {
+  const res = await fetch('/state');
+  const data = await res.json();
 
-    data.portals.forEach(p => {
-      if (p.lat && p.lon) {
-        L.marker([p.lat, p.lon])
-          .addTo(map)
-          .bindPopup(
-            `Portal ${p.portal_id}<br>Faction: ${p.controlled_by || "none"}`
-          );
-      }
-    });
-  }
+  // clear old markers (important!)
+  portalLayer.clearLayers();
 
-  loadPortals();
+  data.portals.forEach(p => {
+    if (p.lat && p.lon) {
+
+      const color =
+        p.controlled_by === "red" ? "red" :
+        p.controlled_by === "blue" ? "blue" :
+        "gray";
+
+      L.circleMarker([p.lat, p.lon], {
+        radius: 8,
+        color: color,
+        fillColor: color,
+        fillOpacity: 0.8
+      })
+      .addTo(portalLayer)
+      .bindPopup(
+        `Portal ${p.portal_id}<br>Faction: ${p.controlled_by || "none"}`
+      );
+    }
+  });
+}
+
+// load once
+loadPortals();
+
+// refresh every 5 seconds
+// setInterval(loadPortals, 5000);
+ 
 </script>
 
 </body>
