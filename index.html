@@ -29,7 +29,11 @@
 
 <body>
 <div id="map"></div>
-
+<div id="ui">
+  <button onclick="alert('capture mode')">Capture</button>
+  <div id="status">Ready</div>
+</div>
+  
 <script>
   // center on Scranton–Pittston area
   const map = L.map('map').setView([41.4, -75.7], 12);
