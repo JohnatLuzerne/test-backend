@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-import sqlite3
+from fastapi.staticfiles import StaticFilesimport sqlite3
 import math
 
 conn = sqlite3.connect("game.db", check_same_thread=False)
@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS portals (
 """)
 conn.commit()
 app = FastAPI()
+app.mount("/", StaticFiles(directory=".", html=True), name="static")
 
 def distance(lat1, lon1, lat2, lon2):
     # simple Euclidean approximation (good enough for small distances)
