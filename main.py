@@ -1,5 +1,7 @@
+
 from fastapi import FastAPI
-from fastapi.staticfiles import StaticFilesimport sqlite3
+from fastapi.staticfiles import StaticFiles
+import sqlite3
 import math
 
 conn = sqlite3.connect("game.db", check_same_thread=False)
