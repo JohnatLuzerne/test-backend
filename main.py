@@ -13,6 +13,12 @@ CREATE TABLE IF NOT EXISTS portals (
 conn.commit()
 app = FastAPI()
 
+@app.get("/migrate")
+def migrate():
+    cursor.execute("ALTER TABLE portals ADD COLUMN lat REAL DEFAULT 0")
+    cursor.execute("ALTER TABLE portals ADD COLUMN lon REAL DEFAULT 0")
+    conn.commit()
+    return {"status": "done"}
 @app.get("/ping")
 def ping():
     return {"message": "alive"}
