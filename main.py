@@ -42,9 +42,10 @@ def capture(portal_id: int, faction: str):
 @app.get("/add_portal")
 def add_portal(portal_id: int, lat: float, lon: float):
     cursor.execute("""
-        INSERT OR REPLACE INTO portals (id, faction)
-        VALUES (?, NULL)
-    """, (portal_id,))
+        INSERT OR REPLACE INTO portals (id, lat, lon, faction)
+        VALUES (?, ?, ?, NULL)
+    """, (portal_id, lat, lon))
+
     conn.commit()
 
     return {
@@ -56,12 +57,17 @@ def add_portal(portal_id: int, lat: float, lon: float):
     
 @app.get("/state")
 def state():
-    cursor.execute("SELECT id, faction FROM portals")
+    cursor.execute("SELECT id, lat, lon, faction FROM portals")
     rows = cursor.fetchall()
 
     return {
         "portals": [
-            {"portal_id": r[0], "controlled_by": r[1]}
+            {
+                "portal_id": r[0],
+                "lat": r[1],
+                "lon": r[2],
+                "controlled_by": r[3]
+            }
             for r in rows
         ]
     }
