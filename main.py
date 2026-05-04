@@ -15,10 +15,19 @@ app = FastAPI()
 
 @app.get("/migrate")
 def migrate():
-    cursor.execute("ALTER TABLE portals ADD COLUMN lat REAL DEFAULT 0")
-    cursor.execute("ALTER TABLE portals ADD COLUMN lon REAL DEFAULT 0")
+    try:
+        cursor.execute("ALTER TABLE portals ADD COLUMN lat REAL")
+    except Exception as e:
+        print("lat column:", e)
+
+    try:
+        cursor.execute("ALTER TABLE portals ADD COLUMN lon REAL")
+    except Exception as e:
+        print("lon column:", e)
+
     conn.commit()
-    return {"status": "done"}
+    return {"status": "migration attempted"}
+
 @app.get("/ping")
 def ping():
     return {"message": "alive"}
