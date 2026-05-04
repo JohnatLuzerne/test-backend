@@ -25,13 +25,29 @@ def echo(value: str):
 @app.get("/capture")
 def capture(portal_id: int, faction: str):
     cursor.execute(
-        "INSERT OR REPLACE INTO portals (id, faction) VALUES (?, ?)",
-        (portal_id, faction)
+        "UPDATE portals SET faction = ? WHERE id = ?",
+        (faction, portal_id)
     )
     conn.commit()
 
     return {"portal_id": portal_id, "controlled_by": faction}
 
+
+@app.get("/add_portal")
+def add_portal(portal_id: int, lat: float, lon: float):
+    cursor.execute("""
+        INSERT OR REPLACE INTO portals (id, faction)
+        VALUES (?, NULL)
+    """, (portal_id,))
+    conn.commit()
+
+    return {
+        "portal_id": portal_id,
+        "lat": lat,
+        "lon": lon,
+        "message": "portal created"
+    }
+    
 @app.get("/state")
 def state():
     cursor.execute("SELECT id, faction FROM portals")
