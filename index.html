@@ -3,7 +3,7 @@
 <head>
   <title>Portal Game</title>
   <meta charset="utf-8" />
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -12,24 +12,29 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
   <style>
+    
 #map {
-  height: 100vh;
+  height: 100dvh;
   width: 100%;
 }
+    
 #ui {
   position: absolute;
-  top: 15px;
-  left: 15px;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 1000;
 
-  background: rgba(255,255,255,0.9);
-  padding: 12px 16px;
-  border-radius: 10px;
+  background: rgba(255,255,255,0.95);
+  padding: 12px;
+  border-radius: 12px;
 
-  min-width: 140px;
+  width: 90%;
+  max-width: 400px;
 
   box-shadow: 0 2px 8px rgba(0,0,0,0.25);
   font-family: Arial, sans-serif;
+  text-align: center;
 }  </style>
 </head>
 
