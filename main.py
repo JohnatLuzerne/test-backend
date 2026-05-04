@@ -30,3 +30,15 @@ def capture(portal_id: int, faction: str):
     conn.commit()
 
     return {"portal_id": portal_id, "controlled_by": faction}
+
+@app.get("/state")
+def state():
+    cursor.execute("SELECT id, faction FROM portals")
+    rows = cursor.fetchall()
+
+    return {
+        "portals": [
+            {"portal_id": r[0], "controlled_by": r[1]}
+            for r in rows
+        ]
+    }
