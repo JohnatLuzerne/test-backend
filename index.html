@@ -50,7 +50,10 @@
 <script>
   // center on Scranton–Pittston area
   const map = L.map('map').setView([41.4, -75.7], 12);
-
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19,
+}).addTo(map);
+  
   let portalLayer = L.layerGroup().addTo(map);
 
 async function loadPortals() {
