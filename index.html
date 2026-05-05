@@ -49,57 +49,46 @@
   
 <script>
   // center on Scranton–Pittston area
-  const map = L.map('map').setView([41.4, -75.7], 12);
+ const map = L.map('map').setView([41.4, -75.7], 12);
+
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 19,
 }).addTo(map);
 
-  let playerLat = null;
-  let playerLon = null;
-  let portalLayer = L.layerGroup().addTo(map);
+let playerLat = 41.4107;
+let playerLon = -75.6713;
 
-  var playerMarker;
-  playerLat = 41.4107;
-  playerLon = -75.6713;
+let portalLayer = L.layerGroup().addTo(map);
+let playerMarker = null;
 
-  updatePlayerMarker();  
-  
-  function canCapture(p) {
-  if (p.controlled_by === "red") return false; // assume player = red for now
+function distance(lat1, lon1, lat2, lon2) {
+  return (lat1 - lat2)**2 + (lon1 - lon2)**2;
+}
 
+function canCapture(p) {
+  if (p.controlled_by === "red") return false;
   if (playerLat === null) return false;
 
   const d = distance(playerLat, playerLon, p.lat, p.lon);
-
   return d < 0.0005;
 }
 
-    function distance(lat1, lon1, lat2, lon2) {
-       return (lat1 - lat2)**2 + (lon1 - lon2)**2;
+function updatePlayerMarker() {
+  if (!playerMarker) {
+    playerMarker = L.marker([playerLat, playerLon]).addTo(map);
+  } else {
+    playerMarker.setLatLng([playerLat, playerLon]);
+  }
 }
- 
-  function updatePlayerMarker() {
-
-  playerMarker.setLatLng([playerLat,playerLon],{title:"You"});
-  playerMarker.addTo(map);
-  //  navigator.geolocation.getCurrentPosition((pos) => {
-//  playerLat = pos.coords.latitude;
-//  playerLon = pos.coords.longitude;
-// });                                         
 
 async function loadPortals() {
   const res = await fetch('/state');
   const data = await res.json();
 
-  // clear old markers
   portalLayer.clearLayers();
-
-  // optional debug
-  //console.log(data.portals);
 
   data.portals.forEach(p => {
 
-    // safety check
     if (p.lat == null || p.lon == null) return;
 
     const color =
@@ -114,13 +103,11 @@ async function loadPortals() {
       fillOpacity: 0.8
     }).addTo(portalLayer);
 
-    // popup HTML (simple string = safest)
     let popupHTML = `
       Portal ${p.id}<br>
       Faction: ${p.controlled_by || "none"}<br>
     `;
 
-    // only show capture button if eligible
     if (canCapture(p)) {
       popupHTML += `<button onclick="capture(${p.id})">Capture</button>`;
     }
@@ -128,12 +115,9 @@ async function loadPortals() {
     marker.bindPopup(popupHTML);
   });
 }
-// load once
-loadPortals();
 
-// refresh every 5 seconds
-// setInterval(loadPortals, 5000);
-  
+updatePlayerMarker();
+loadPortals();  
 </script>
 
 </body>
