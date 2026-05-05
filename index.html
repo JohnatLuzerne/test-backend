@@ -53,8 +53,17 @@
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 19,
 }).addTo(map);
-  
-  let portalLayer = L.layerGroup().addTo(map);
+
+  let playerLat = null;
+  let playerLon = null;
+  let portalLayer = L.layerGroup().addTo(map
+
+  playerlat = 41; playerlon = -75;
+
+//  navigator.geolocation.getCurrentPosition((pos) => {
+//  playerLat = pos.coords.latitude;
+//  playerLon = pos.coords.longitude;
+// });                                         
 
 async function loadPortals() {
   const res = await fetch('/state');
