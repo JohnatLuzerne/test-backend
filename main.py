@@ -10,6 +10,8 @@ cursor = conn.cursor()
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS portals (
     id INTEGER PRIMARY KEY,
+    lat REAL,
+    lon REAL,
     faction TEXT
 )
 """)
@@ -50,19 +52,27 @@ def capture(portal_id: int, lat: float, lon: float, faction: str):
     }
 @app.get("/migrate")
 def migrate():
-    try:
-        cursor.execute("ALTER TABLE portals ADD COLUMN lat REAL")
-    except Exception as e:
-        print("lat column:", e)
+    portals = [
+        (1, 41.4089, -75.6624, "red"),    # Scranton downtown
+        (2, 41.4235, -75.6132, "blue"),   # Dunmore
+        (3, 41.3890, -75.6885, None),     # West Scranton
+        (4, 41.4370, -75.6500, "red"),    # Near Green Ridge
+        (5, 41.4015, -75.6200, "blue"),   # East Scranton
+    ]
 
-    try:
-        cursor.execute("ALTER TABLE portals ADD COLUMN lon REAL")
-    except Exception as e:
-        print("lon column:", e)
+    for p in portals:
+        cursor.execute("""
+            INSERT INTO portals (id, lat, lon, faction)
+            VALUES (%s, %s, %s, %s)
+            ON CONFLICT (id) DO UPDATE
+            SET lat = EXCLUDED.lat,
+                lon = EXCLUDED.lon,
+                faction = EXCLUDED.faction
+        """, p)
 
     conn.commit()
-    return {"status": "migration attempted"}
-
+    return {"status": "seeded", "count": len(portals)}
+    
 @app.get("/ping")
 def ping():
     return {"message": "alive"}
