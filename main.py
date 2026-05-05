@@ -50,28 +50,25 @@ def capture(portal_id: int, lat: float, lon: float, faction: str):
         "controlled_by": faction,
         "distance": dist
     }
+
 @app.get("/migrate")
 def migrate():
     portals = [
-        (1, 41.4089, -75.6624, "red"),    # Scranton downtown
-        (2, 41.4235, -75.6132, "blue"),   # Dunmore
-        (3, 41.3890, -75.6885, None),     # West Scranton
-        (4, 41.4370, -75.6500, "red"),    # Near Green Ridge
-        (5, 41.4015, -75.6200, "blue"),   # East Scranton
+        (1, 41.4089, -75.6624, "red"),
+        (2, 41.4235, -75.6132, "blue"),
+        (3, 41.3890, -75.6885, None),
+        (4, 41.4370, -75.6500, "red"),
+        (5, 41.4015, -75.6200, "blue"),
     ]
 
     for p in portals:
         cursor.execute("""
-            INSERT INTO portals (id, lat, lon, faction)
-            VALUES (%s, %s, %s, %s)
-            ON CONFLICT (id) DO UPDATE
-            SET lat = EXCLUDED.lat,
-                lon = EXCLUDED.lon,
-                faction = EXCLUDED.faction
+            INSERT OR REPLACE INTO portals (id, lat, lon, faction)
+            VALUES (?, ?, ?, ?)
         """, p)
 
     conn.commit()
-    return {"status": "seeded", "count": len(portals)}
+    return {"status": "seeded"}
     
 @app.get("/ping")
 def ping():
