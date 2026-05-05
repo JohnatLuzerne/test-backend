@@ -79,9 +79,19 @@ L.marker([41.4107, -75.6713]).addTo(map);
         fillOpacity: 0.8
       })
       .addTo(portalLayer)
-      .bindPopup(
-        `Portal ${p.portal_id}<br>Faction: ${p.controlled_by || "none"}`
-      );
+      .bindPopup(() => {
+
+       let html = `
+         Portal ${p.id}<br>
+         Faction: ${p.controlled_by || "none"}<br>
+     `;
+
+     if (canCapture(p)) {
+        html += `<button onclick="capture(${p.id})">Capture</button>`;
+     }
+
+     return html;
+    }); 
     }
   });
 }
@@ -91,7 +101,21 @@ loadPortals();
 
 // refresh every 5 seconds
 // setInterval(loadPortals, 5000);
- 
+
+  function canCapture(p) {
+  if (p.controlled_by === "red") return false; // assume player = red for now
+
+  if (playerLat === null) return false;
+
+  const d = distance(playerLat, playerLon, p.lat, p.lon);
+
+  return d < 0.0005;
+}
+
+  function distance(lat1, lon1, lat2, lon2) {
+       return (lat1 - lat2)**2 + (lon1 - lon2)**2;
+}
+
 </script>
 
 </body>
