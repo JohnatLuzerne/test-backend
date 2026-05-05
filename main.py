@@ -15,8 +15,7 @@ CREATE TABLE IF NOT EXISTS portals (
 """)
 conn.commit()
 app = FastAPI()
-app.mount("/", StaticFiles(directory=".", html=True), name="static")
-
+app.mount("/static", StaticFiles(directory="static"), name="static")
 def distance(lat1, lon1, lat2, lon2):
     # simple Euclidean approximation (good enough for small distances)
     return math.sqrt((lat1 - lat2)**2 + (lon1 - lon2)**2)
