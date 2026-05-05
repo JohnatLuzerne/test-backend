@@ -58,11 +58,11 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   let playerLon = null;
   let portalLayer = L.layerGroup().addTo(map);
 
- 
+  var playerMarker;
   playerLat = 41.4107;
   playerLon = -75.6713;
 
-updatePlayerMarker();  updatePlayerMarker();
+  updatePlayerMarker();  
   
   function canCapture(p) {
   if (p.controlled_by === "red") return false; // assume player = red for now
@@ -80,14 +80,8 @@ updatePlayerMarker();  updatePlayerMarker();
  
   function updatePlayerMarker() {
 
-  if (playerMarker) {
-    playerMarker.setLatLng([playerLat, playerLon]);
-  } else {
-    playerMarker = L.marker([playerLat, playerLon], {
-      title: "You"
-    }).addTo(map);
-  }
-}  
+  playerMarker.setLatLng([playerLat,playerLon],{title:"You"});
+  playerMarker.addTo(map);
   //  navigator.geolocation.getCurrentPosition((pos) => {
 //  playerLat = pos.coords.latitude;
 //  playerLon = pos.coords.longitude;
