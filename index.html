@@ -35,7 +35,18 @@
   box-shadow: 0 2px 8px rgba(0,0,0,0.25);
   font-family: Arial, sans-serif;
   text-align: center;
-}  </style>
+} 
+
+.capture-eligible {
+  animation: pulse 5s infinite;
+}
+
+@keyframes pulse {
+  0%   { filter: drop-shadow(0 0 2px gold); }
+  50%  { filter: drop-shadow(0 0 12px gold); }
+  100% { filter: drop-shadow(0 0 2px gold); }
+}    
+ </style>
 </head>
 
 <body>
@@ -119,19 +130,27 @@ async function loadPortals() {
   data.portals.forEach(p => {
 
     if (p.lat == null || p.lon == null) return;
-
+    const eligible = canCapture(p);
+    
     const color =
       p.controlled_by === "red" ? "red" :
       p.controlled_by === "blue" ? "blue" :
       "gray";
 
     const marker = L.circleMarker([p.lat, p.lon], {
-      radius: 8,
+      radius: eligible ? 14 : 10,
       color: color,
+      weight: eligible ? 4 : 2,
       fillColor: color,
       fillOpacity: 0.8
-    }).addTo(portalLayer);
+   }).addTo(portalLayer);  
 
+    if (eligible) {
+        marker.setStyle({
+          className: "capture-eligible"
+        });
+    }    
+    
     let popupHTML = `
       Portal ${p.id}<br>
       Faction: ${p.controlled_by || "none"}<br>
