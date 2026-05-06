@@ -72,7 +72,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   const player = await res.json();
   console.log(player);
   document.getElementById("playerName").innerText = player.name;
-  document.getElementById("playerFaction").innerText = player.faction;
+  document.getElementById("playerFaction").innerText = player.player_faction;
   document.getElementById("playerEnergy").innerText = player.energy;
   document.getElementById("playerXP").innerText = player.experience;
 }  
@@ -80,7 +80,7 @@ loadPlayer();
 
 let playerLat = 41.4089;
 let playerLon = -75.6624;
-let myplayerfaction = player.faction; 
+let myplayerfaction = player.player_faction; 
 let playerName = player.name; 
 
 let portalLayer = L.layerGroup().addTo(map);
