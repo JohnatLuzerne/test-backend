@@ -19,6 +19,7 @@ conn.commit()
 app = FastAPI()
 def distance(lat1, lon1, lat2, lon2):
     # simple Euclidean approximation (good enough for small distances)
+    #
     return math.sqrt((lat1 - lat2)**2 + (lon1 - lon2)**2)
 
 @app.get("/capture")
