@@ -142,9 +142,9 @@ async function loadPortals() {
 
   
   const marker = L.circleMarker([p.lat, p.lon], {
-      radius: eligible ? 14 : 10,
+      radius: eligible ? 12 : 10,
       color: color,
-      weight: eligible ? 4 : 2,
+      weight: eligible ? 6 : 2,
       fillColor: color,
       fillOpacity: 0.8
   }).addTo(portalLayer);
@@ -154,6 +154,7 @@ async function loadPortals() {
     
     let popupHTML = `
       Name ${p.portal_name}<br>
+      Owner ${p.owner}<br>
       Faction: ${p.controlled_by || "none"}<br>
     `;
 
