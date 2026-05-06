@@ -176,6 +176,7 @@ def state():
             }
             for r in rows
         ]
+    }
 
     cursor.execute("SELECT id, name, player_faction, energy, experience FROM players")
     rows = cursor.fetchall()
