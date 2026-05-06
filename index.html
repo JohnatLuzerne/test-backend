@@ -71,6 +71,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 let playerLat = 41.4089;
 let playerLon = -75.6624;
 let myplayerfaction = "Skylords";  
+let playerName = "John";  
 
 let portalLayer = L.layerGroup().addTo(map);
 let playerMarker = null;
@@ -88,7 +89,7 @@ async function capture(portalId) {
 
   try {
       const res = await fetch(
-  `/capture?portal_id=${portalId}&lat=${playerLat}&lon=${playerLon}&faction=${myplayerfaction}`
+  `/capture?portal_id=${portalId}&lat=${playerLat}&lon=${playerLon}&faction=${myplayerfaction}&owner=${playerNAME}`
 );    );
 
     const data = await res.json();
