@@ -78,18 +78,6 @@ def ping():
 def echo(value: str):
     return {"you_sent": value}
 
-
-@app.get("/capture")
-def capture(portal_id: int, faction: str):
-    cursor.execute(
-        "UPDATE portals SET faction = ? WHERE id = ?",
-        (faction, portal_id)
-    )
-    conn.commit()
-
-    return {"portal_id": portal_id, "controlled_by": faction}
-
-
 @app.get("/add_portal")
 def add_portal(portal_id: int, lat: float, lon: float):
     cursor.execute("""
@@ -114,7 +102,7 @@ def state():
     return {
         "portals": [
             {
-                "portal_id": r[0],
+                "id": r[0],
                 "lat": r[1],
                 "lon": r[2],
                 "controlled_by": r[3]
