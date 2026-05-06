@@ -107,7 +107,8 @@ async function capture(portalId) {
 
     document.getElementById("status").innerText = data.status;
 
-    loadPortals(); // refresh map after capture
+    await loadPortals(); // refresh map after capture
+    await loadPlayer();
 
   } catch (err) {
     document.getElementById("status").innerText = "Error contacting server";
