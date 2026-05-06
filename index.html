@@ -141,19 +141,16 @@ async function loadPortals() {
       p.controlled_by === "Elves" ? "green" :
       "gray";
 
-    const marker = L.circleMarker([p.lat, p.lon], {
+  
+  const marker = L.circleMarker([p.lat, p.lon], {
       radius: eligible ? 14 : 10,
       color: color,
       weight: eligible ? 4 : 2,
       fillColor: color,
-      fillOpacity: 0.8
-   }).addTo(portalLayer);  
-
-    if (eligible) {
-        marker.setStyle({
-          className: "capture-eligible"
-        });
-    }    
+      fillOpacity: 0.8,
+      className: eligible ? "capture-eligible" : ""
+  }).addTo(portalLayer);
+  
     
     let popupHTML = `
       Name ${p.portal_name}<br>
