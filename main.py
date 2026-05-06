@@ -40,7 +40,7 @@ app.mount("/static", StaticFiles(directory=".", html=True), name="static")
 def distance(lat1, lon1, lat2, lon2):
     # simple Euclidean approximation (good enough for small distances)
     #
-    return math.sqrt((lat1 - lat2)**2 + (lon1 - lon2)**2)
+    return ((lat1 - lat2)**2 + (lon1 - lon2)**2)
 
 @app.get("/capture")
 def capture(portal_id: int, lat: float, lon: float, faction: str, owner: str):
@@ -56,7 +56,7 @@ def capture(portal_id: int, lat: float, lon: float, faction: str, owner: str):
     dist = distance(lat, lon, portal_lat, portal_lon)
 
     # threshold ~0.001 ≈ ~300 feet (rough estimate)
-    if dist > 0.001:
+    if dist > 0.0005:
         return {"status": "too far from portal", "distance": dist}
 
     # allow capture
