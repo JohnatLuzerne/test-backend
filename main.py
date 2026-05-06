@@ -76,6 +76,15 @@ def capture(portal_id: int, lat: float, lon: float, faction: str, owner: str):
         "UPDATE portals SET faction = ?, owner = ? WHERE id = ?",
         (faction, owner, portal_id)
     )
+
+    # update player info
+    cursor.execute("""
+    UPDATE players
+    SET
+        energy = energy - 10,
+        experience = experience + 5
+    WHERE id = 1
+    """)    
     conn.commit()
 
     return {
