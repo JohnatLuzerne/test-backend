@@ -90,7 +90,7 @@ async function capture(portalId) {
 }
   
 function canCapture(p) {
-  if (p.controlled_by === "red") return false;
+  //if (p.controlled_by === "red") return false;
   if (playerLat === null) return false;
 
   const d = distance(playerLat, playerLon, p.lat, p.lon);
