@@ -176,7 +176,7 @@ def state():
                 "portal_name": r[5]
             }
             for r in rows
-        ]
+        ],
         "players": [
             {
                 "id": r[0],
