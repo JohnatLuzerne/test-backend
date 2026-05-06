@@ -12,10 +12,19 @@ CREATE TABLE IF NOT EXISTS portals (
     id INTEGER PRIMARY KEY,
     lat REAL,
     lon REAL,
-    faction TEXT
+    faction TEXT,
+    owner TEXT,
+    portal_name TEXT
 )
 """)
-conn.commit()
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS players (
+    id INTEGER PRIMARY KEY,
+    name TEXT,
+    energy INTEGER,
+    experience INTEGER
+)
+""")conn.commit()
 app = FastAPI()
 def distance(lat1, lon1, lat2, lon2):
     # simple Euclidean approximation (good enough for small distances)
@@ -54,20 +63,31 @@ def capture(portal_id: int, lat: float, lon: float, faction: str):
 @app.get("/migrate")
 def migrate():
     portals = [
-        (1, 41.4089, -75.6624, "red"),
-        (2, 41.4235, -75.6132, "blue"),
-        (3, 41.3890, -75.6885, None),
-        (4, 41.4370, -75.6500, "red"),
-        (5, 41.4015, -75.6200, "blue"),
+        (1, 41.4089, -75.6624, "red", "None"),
+        (2, 41.4235, -75.6132, "blue", "None"),
+        (3, 41.3890, -75.6885, "None", "None"),
+        (4, 41.4370, -75.6500, "red", "None"),
+        (5, 41.4015, -75.6200, "blue", "None"),
     ]
+    players = {
+        {1, "John", 50000, 0}
+    }
 
     for p in portals:
         cursor.execute("""
-            INSERT OR REPLACE INTO portals (id, lat, lon, faction)
+            INSERT OR REPLACE INTO portals (id, lat, lon, faction, owner)
             VALUES (?, ?, ?, ?)
         """, p)
 
     conn.commit()
+
+     for p in players:
+        cursor.execute("""
+            INSERT OR REPLACE INTO players (id, name, energy, experience)
+            VALUES (?, ?, ?, ?)
+        """, p)
+
+    conn.commit()    
     return {"status": "seeded"}
     
 @app.get("/ping")
@@ -81,7 +101,7 @@ def echo(value: str):
 @app.get("/add_portal")
 def add_portal(portal_id: int, lat: float, lon: float):
     cursor.execute("""
-        INSERT OR REPLACE INTO portals (id, lat, lon, faction)
+        INSERT OR REPLACE INTO portals (id, lat, lon, faction, owner)
         VALUES (?, ?, ?, NULL)
     """, (portal_id, lat, lon))
 
@@ -96,7 +116,7 @@ def add_portal(portal_id: int, lat: float, lon: float):
     
 @app.get("/state")
 def state():
-    cursor.execute("SELECT id, lat, lon, faction FROM portals")
+    cursor.execute("SELECT id, lat, lon, faction, owner FROM portals")
     rows = cursor.fetchall()
 
     return {
@@ -105,7 +125,8 @@ def state():
                 "id": r[0],
                 "lat": r[1],
                 "lon": r[2],
-                "controlled_by": r[3]
+                "controlled_by": r[3],
+                "portal_owner": r[4]
             }
             for r in rows
         ]
