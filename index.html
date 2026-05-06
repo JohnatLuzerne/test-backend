@@ -78,6 +78,7 @@ async function capture(portalId) {
     );
 
     const data = await res.json();
+    console.log(data);
 
     document.getElementById("status").innerText = data.status;
 
