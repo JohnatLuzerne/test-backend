@@ -133,8 +133,9 @@ async function loadPortals() {
     const eligible = canCapture(p);
     
     const color =
-      p.controlled_by === "red" ? "red" :
-      p.controlled_by === "blue" ? "blue" :
+      p.controlled_by === "Knights" ? "red" :
+      p.controlled_by === "Skylords" ? "blue" :
+      p.controlled_by === "Elves" ? "green" :
       "gray";
 
     const marker = L.circleMarker([p.lat, p.lon], {
