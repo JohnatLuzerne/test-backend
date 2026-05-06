@@ -44,12 +44,12 @@ def distance(lat1, lon1, lat2, lon2):
 
 @app.get("/player")
 def get_player():
-    cursor.execute("SELECT name, faction, energy, experience FROM players WHERE id = 1")
+    cursor.execute("SELECT name, player_faction, energy, experience FROM players WHERE id = 1")
     row = cursor.fetchone()
 
     return {
         "name": row[0],
-        "faction": row[1],
+        "player_faction": row[1],
         "energy": row[2],
         "experience": row[3]
     }
