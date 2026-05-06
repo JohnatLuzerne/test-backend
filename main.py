@@ -42,6 +42,18 @@ def distance(lat1, lon1, lat2, lon2):
     #
     return ((lat1 - lat2)**2 + (lon1 - lon2)**2)
 
+@app.get("/player")
+def get_player():
+    cursor.execute("SELECT name, faction, energy, experience FROM players WHERE id = 1")
+    row = cursor.fetchone()
+
+    return {
+        "name": row[0],
+        "faction": row[1],
+        "energy": row[2],
+        "experience": row[3]
+    }
+    
 @app.get("/capture")
 def capture(portal_id: int, lat: float, lon: float, faction: str, owner: str):
     # get portal location
