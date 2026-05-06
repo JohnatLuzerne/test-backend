@@ -28,7 +28,7 @@ def capture(portal_id: int, lat: float, lon: float, faction: str):
     row = cursor.fetchone()
 
     if row is None:
-        return {"error": "portal not found"}
+        return {"status": "portal not found"}
 
     portal_lat, portal_lon = row
 
@@ -36,7 +36,7 @@ def capture(portal_id: int, lat: float, lon: float, faction: str):
 
     # threshold ~0.001 ≈ ~300 feet (rough estimate)
     if dist > 0.001:
-        return {"error": "too far from portal", "distance": dist}
+        return {"status": "too far from portal", "distance": dist}
 
     # allow capture
     cursor.execute(
@@ -46,9 +46,8 @@ def capture(portal_id: int, lat: float, lon: float, faction: str):
     conn.commit()
 
     return {
-        "portal_id": portal_id,
-        "controlled_by": faction,
-        "distance": dist
+        "status": "captured",
+        "portal_id": portal_id
     }
 
 @app.get("/migrate")
