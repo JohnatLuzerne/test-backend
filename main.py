@@ -24,15 +24,25 @@ CREATE TABLE IF NOT EXISTS players (
     energy INTEGER,
     experience INTEGER
 )
-""")conn.commit()
+""")
+conn.commit()
+
 app = FastAPI()
+from fastapi.responses import FileResponse
+
+@app.get("/")
+def root():
+    return FileResponse("index.html")
+
+app.mount("/static", StaticFiles(directory=".", html=True), name="static")
+
 def distance(lat1, lon1, lat2, lon2):
     # simple Euclidean approximation (good enough for small distances)
     #
     return math.sqrt((lat1 - lat2)**2 + (lon1 - lon2)**2)
 
 @app.get("/capture")
-def capture(portal_id: int, lat: float, lon: float, faction: str):
+def capture(portal_id: int, lat: float, lon: float, faction: str, owner: str):
     # get portal location
     cursor.execute("SELECT lat, lon FROM portals WHERE id = ?", (portal_id,))
     row = cursor.fetchone()
@@ -50,8 +60,8 @@ def capture(portal_id: int, lat: float, lon: float, faction: str):
 
     # allow capture
     cursor.execute(
-        "UPDATE portals SET faction = ? WHERE id = ?",
-        (faction, portal_id)
+        "UPDATE portals SET faction = ?, owner = ? WHERE id = ?",
+        (faction, owner, portal_id)
     )
     conn.commit()
 
@@ -63,32 +73,41 @@ def capture(portal_id: int, lat: float, lon: float, faction: str):
 @app.get("/migrate")
 def migrate():
     portals = [
-        (1, 41.4089, -75.6624, "red", "None"),
-        (2, 41.4235, -75.6132, "blue", "None"),
-        (3, 41.3890, -75.6885, "None", "None"),
-        (4, 41.4370, -75.6500, "red", "None"),
-        (5, 41.4015, -75.6200, "blue", "None"),
+    (1, 41.4086, -75.6621, "red", None, "Lackawanna County Courthouse"),
+    (2, 41.4056, -75.6625, "blue", None, "Steamtown National Historic Site"),
+    (3, 41.4092, -75.6649, "green", None, "Scranton Cultural Center"),
+    (4, 41.4045, -75.6690, "red", None, "University of Scranton"),
+    (5, 41.4023, -75.6245, "blue", None, "Nay Aug Park"),
+    (6, 41.3255, -75.7893, "blue", None, "Pittston Memorial Library"),
+    (7, 41.3270, -75.7898, "red", None, "Greater Pittston YMCA"),
+    (8, 41.3260, -75.7890, "green", None, "Pittston City Hall"),
+
+    (9, 41.3342, -75.7370, "blue", None, "Dupont Borough Building"),
+    (10, 41.3350, -75.7355, "red", None, "Sacred Heart of Jesus Church"),
+
+    (11, 41.3395, -75.7280, "green", None, "Avoca Municipal Building"),
+    (12, 41.3388, -75.7305, "blue", None, "St. Mary’s Church Avoca")
+    ]   
+
+    players = [
+        (1, "John", 50000, 0)
     ]
-    players = {
-        {1, "John", 50000, 0}
-    }
 
     for p in portals:
         cursor.execute("""
-            INSERT OR REPLACE INTO portals (id, lat, lon, faction, owner)
-            VALUES (?, ?, ?, ?)
+            INSERT OR REPLACE INTO portals (id, lat, lon, faction, owner, portal_name)
+            VALUES (?, ?, ?, ?, ?, ?)
         """, p)
 
-    conn.commit()
-
-     for p in players:
+    for p in players:
         cursor.execute("""
             INSERT OR REPLACE INTO players (id, name, energy, experience)
             VALUES (?, ?, ?, ?)
         """, p)
 
-    conn.commit()    
-    return {"status": "seeded"}
+    conn.commit()
+
+    return {"status": "seeded"}   
     
 @app.get("/ping")
 def ping():
@@ -102,11 +121,15 @@ def echo(value: str):
 def add_portal(portal_id: int, lat: float, lon: float):
     cursor.execute("""
         INSERT OR REPLACE INTO portals (id, lat, lon, faction, owner)
-        VALUES (?, ?, ?, NULL)
+        VALUES (?, ?, ?, 'neutral', NULL)
     """, (portal_id, lat, lon))
 
     conn.commit()
 
+    return {
+        "portal_id": portal_id,
+        "message": "portal created"
+    }
     return {
         "portal_id": portal_id,
         "lat": lat,
@@ -132,4 +155,3 @@ def state():
         ]
     }
 
-app.mount("/", StaticFiles(directory=".", html=True), name="static")
