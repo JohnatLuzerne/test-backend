@@ -90,7 +90,7 @@ async function capture(portalId) {
   try {
       const res = await fetch(
   `/capture?portal_id=${portalId}&lat=${playerLat}&lon=${playerLon}&faction=${myplayerfaction}&owner=${playerNAME}`
-);    );
+  );  
 
     const data = await res.json();
     console.log(data);
