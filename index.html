@@ -147,10 +147,12 @@ async function loadPortals() {
       color: color,
       weight: eligible ? 4 : 2,
       fillColor: color,
-      fillOpacity: 0.8,
-      className: eligible ? "capture-eligible" : ""
+      fillOpacity: 0.8
   }).addTo(portalLayer);
-  
+
+    if (eligible && marker._path) {
+       marker._path.classList.add("capture-eligible");
+    }  
     
     let popupHTML = `
       Name ${p.portal_name}<br>
