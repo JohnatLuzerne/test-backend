@@ -87,9 +87,9 @@ async function capture(portalId) {
   }
 
   try {
-    const res = await fetch(
-      `/capture?portal_id=${portalId}&lat=${playerLat}&lon=${playerLon}&faction=red`
-    );
+      const res = await fetch(
+  `/capture?portal_id=${portalId}&lat=${playerLat}&lon=${playerLon}&faction=${myplayerfaction}`
+);    );
 
     const data = await res.json();
     console.log(data);
@@ -105,14 +105,16 @@ async function capture(portalId) {
 }
   
 function canCapture(p) {
-  //if (p.controlled_by === "red") return false;
-  if (playerLat === null) return false;
-  if (myplayerfaction == p.faction) return false;
+  if (playerLat === null || playerLon === null) return false;
+
+  // cannot capture your own faction
+  if (p.controlled_by === myplayerfaction) return false;
 
   const d = distance(playerLat, playerLon, p.lat, p.lon);
+
   return d < 0.0005;
 }
-
+  
 function updatePlayerMarker() {
   if (!playerMarker) {
     playerMarker = L.marker([playerLat, playerLon]).addTo(map);
