@@ -150,7 +150,8 @@ def state():
                 "lat": r[1],
                 "lon": r[2],
                 "controlled_by": r[3],
-                "portal_owner": r[4]
+                "portal_owner": r[4],
+                "portal_name": r[5]
             }
             for r in rows
         ]
