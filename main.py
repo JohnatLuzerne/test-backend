@@ -21,7 +21,7 @@ cursor.execute("""
 CREATE TABLE IF NOT EXISTS players (
     id INTEGER PRIMARY KEY,
     name TEXT,
-    player_faction: TEXT,
+    player_faction TEXT,
     energy INTEGER,
     experience INTEGER
 )
