@@ -72,15 +72,22 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   experience: 0
 };
 
-document.getElementById("playerName").innerText = player.name;
-document.getElementById("playerFaction").innerText = player.faction;
-document.getElementById("playerEnergy").innerText = player.energy;
-document.getElementById("playerXP").innerText = player.experience;
+// Get player info once on load 
+  async function loadPlayer() {
+  const res = await fetch('/player');
+  const player = await res.json();
+
+  document.getElementById("playerName").innerText = player.name;
+  document.getElementById("playerFaction").innerText = player.faction;
+  document.getElementById("playerEnergy").innerText = player.energy;
+  document.getElementById("playerXP").innerText = player.experience;
+}  
+loadPlayer();
 
 let playerLat = 41.4089;
 let playerLon = -75.6624;
-let myplayerfaction = "Skylords";  
-let playerName = "John";  
+let myplayerfaction = player.faction; 
+let playerName = player.name; 
 
 let portalLayer = L.layerGroup().addTo(map);
 let playerMarker = null;
