@@ -176,5 +176,19 @@ def state():
             }
             for r in rows
         ]
-    }
 
+    cursor.execute("SELECT id, name, player_faction, energy, experience FROM players")
+    rows = cursor.fetchall()
+
+    return {
+        "players": [
+            {
+                "id": r[0],
+                "name": r[1],
+                "player_faction": r[2],
+                "energy": r[3],
+                "experience": r[4]
+            }
+            for r in rows
+        ]
+    }
