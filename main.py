@@ -140,7 +140,7 @@ def add_portal(portal_id: int, lat: float, lon: float):
     
 @app.get("/state")
 def state():
-    cursor.execute("SELECT id, lat, lon, faction, owner FROM portals")
+    cursor.execute("SELECT id, lat, lon, faction, owner, portal_name FROM portals")
     rows = cursor.fetchall()
 
     return {
