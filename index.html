@@ -59,6 +59,7 @@
 </div> 
 <script>
 
+var myplayerfaction; playerName;
  const map = L.map('map').setView([41.4, -75.7], 12);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -75,13 +76,15 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   document.getElementById("playerFaction").innerText = player.player_faction;
   document.getElementById("playerEnergy").innerText = player.energy;
   document.getElementById("playerXP").innerText = player.experience;
-}  
+  myplayerfaction = player.player_faction; 
+  playerName = player.name;
+  }  
 loadPlayer();
 
 let playerLat = 41.4089;
 let playerLon = -75.6624;
-let myplayerfaction = player.player_faction; 
-let playerName = player.name; 
+
+ 
 
 let portalLayer = L.layerGroup().addTo(map);
 let playerMarker = null;
