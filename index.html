@@ -70,7 +70,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   async function loadPlayer() {
   const res = await fetch('/player');
   const player = await res.json();
-
+  console.log(player);
   document.getElementById("playerName").innerText = player.name;
   document.getElementById("playerFaction").innerText = player.faction;
   document.getElementById("playerEnergy").innerText = player.energy;
