@@ -149,10 +149,8 @@ async function loadPortals() {
       fillOpacity: 0.8
   }).addTo(portalLayer);
 
-    if (eligible && marker._path) {
-       //marker._path.classList.add("capture-eligible");
-       L.DomUtil.addClass(marker._path, 'capture-eligible');
-    }  
+    if (eligible) {
+       marker.setStyle({ fillColor: 'gold' });    }  
     
     let popupHTML = `
       Name ${p.portal_name}<br>
