@@ -88,7 +88,7 @@ async function capture(portalId) {
 
   try {
       const res = await fetch(
-  `/capture?portal_id=${portalId}&lat=${playerLat}&lon=${playerLon}&faction=${myplayerfaction}&owner=${playerNAME}`
+  `/capture?portal_id=${portalId}&lat=${playerLat}&lon=${playerLon}&faction=${myplayerfaction}&owner=${playerName}`
   );  
 
     const data = await res.json();
