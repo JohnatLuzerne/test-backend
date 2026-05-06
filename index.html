@@ -42,9 +42,11 @@
 <div id="map"></div>
 <div id="ui">
   <div id="status">Ready</div>
-  <button style="width:100%; padding:12px; font-size:16px;">
-  Capture
-</button>
+  <div id="player name">Johnny</div>
+  <div id="player faction">Skylords</div>
+  <div id="Experience"></div>
+  <div id="Level"></div>
+  <div id="Energy"></div>
 </div>
   
 <script>
@@ -57,6 +59,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 let playerLat = 41.4089;
 let playerLon = -75.6624;
+let myplayerfaction = "Skylords";  
 
 let portalLayer = L.layerGroup().addTo(map);
 let playerMarker = null;
@@ -93,6 +96,7 @@ async function capture(portalId) {
 function canCapture(p) {
   //if (p.controlled_by === "red") return false;
   if (playerLat === null) return false;
+  if (myplayerfaction == p.faction) return false;
 
   const d = distance(playerLat, playerLon, p.lat, p.lon);
   return d < 0.0005;
