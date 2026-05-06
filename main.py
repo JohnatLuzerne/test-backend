@@ -163,7 +163,8 @@ def add_portal(portal_id: int, lat: float, lon: float):
 def state():
     cursor.execute("SELECT id, lat, lon, faction, owner, portal_name FROM portals")
     rows = cursor.fetchall()
-
+    cursor.execute("SELECT id, name, player_faction, energy, experience FROM players")
+    rows2 = cursor.fetchall()    
     return {
         "portals": [
             {
@@ -176,12 +177,6 @@ def state():
             }
             for r in rows
         ]
-    }
-
-    cursor.execute("SELECT id, name, player_faction, energy, experience FROM players")
-    rows = cursor.fetchall()
-
-    return {
         "players": [
             {
                 "id": r[0],
@@ -190,6 +185,8 @@ def state():
                 "energy": r[3],
                 "experience": r[4]
             }
-            for r in rows
-        ]
+            for r in rows2
+        ]        
     }
+
+    
