@@ -65,6 +65,30 @@ function distance(lat1, lon1, lat2, lon2) {
   return (lat1 - lat2)**2 + (lon1 - lon2)**2;
 }
 
+async function capture(portalId) {
+
+  if (playerLat == null || playerLon == null) {
+    document.getElementById("status").innerText = "No location";
+    return;
+  }
+
+  try {
+    const res = await fetch(
+      `/capture?portal_id=${portalId}&lat=${playerLat}&lon=${playerLon}&faction=red`
+    );
+
+    const data = await res.json();
+
+    document.getElementById("status").innerText = data.status;
+
+    loadPortals(); // refresh map after capture
+
+  } catch (err) {
+    document.getElementById("status").innerText = "Error contacting server";
+    console.error(err);
+  }
+}
+  
 function canCapture(p) {
   if (p.controlled_by === "red") return false;
   if (playerLat === null) return false;
