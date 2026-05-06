@@ -151,7 +151,8 @@ async function loadPortals() {
   }).addTo(portalLayer);
 
     if (eligible && marker._path) {
-       marker._path.classList.add("capture-eligible");
+       //marker._path.classList.add("capture-eligible");
+       L.DomUtil.addClass(marker._path, 'capture-eligible');
     }  
     
     let popupHTML = `
