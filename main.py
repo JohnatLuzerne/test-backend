@@ -21,6 +21,7 @@ cursor.execute("""
 CREATE TABLE IF NOT EXISTS players (
     id INTEGER PRIMARY KEY,
     name TEXT,
+    player_faction: TEXT,
     energy INTEGER,
     experience INTEGER
 )
@@ -73,24 +74,24 @@ def capture(portal_id: int, lat: float, lon: float, faction: str, owner: str):
 @app.get("/migrate")
 def migrate():
     portals = [
-    (1, 41.4086, -75.6621, "red", None, "Lackawanna County Courthouse"),
-    (2, 41.4056, -75.6625, "blue", None, "Steamtown National Historic Site"),
-    (3, 41.4092, -75.6649, "green", None, "Scranton Cultural Center"),
-    (4, 41.4045, -75.6690, "red", None, "University of Scranton"),
-    (5, 41.4023, -75.6245, "blue", None, "Nay Aug Park"),
-    (6, 41.3255, -75.7893, "blue", None, "Pittston Memorial Library"),
-    (7, 41.3270, -75.7898, "red", None, "Greater Pittston YMCA"),
-    (8, 41.3260, -75.7890, "green", None, "Pittston City Hall"),
+    (1, 41.4086, -75.6621, "Knights", None, "Lackawanna County Courthouse"),
+    (2, 41.4056, -75.6625, "Skylords", None, "Steamtown National Historic Site"),
+    (3, 41.4092, -75.6649, "Elves", None, "Scranton Cultural Center"),
+    (4, 41.4045, -75.6690, "Knights", None, "University of Scranton"),
+    (5, 41.4023, -75.6245, "Skylords", None, "Nay Aug Park"),
+    (6, 41.3255, -75.7893, "Skylords", None, "Pittston Memorial Library"),
+    (7, 41.3270, -75.7898, "Knights", None, "Greater Pittston YMCA"),
+    (8, 41.3260, -75.7890, "Elves", None, "Pittston City Hall"),
 
-    (9, 41.3342, -75.7370, "blue", None, "Dupont Borough Building"),
-    (10, 41.3350, -75.7355, "red", None, "Sacred Heart of Jesus Church"),
+    (9, 41.3342, -75.7370, "Skylords", None, "Dupont Borough Building"),
+    (10, 41.3350, -75.7355, "Knights", None, "Sacred Heart of Jesus Church"),
 
-    (11, 41.3395, -75.7280, "green", None, "Avoca Municipal Building"),
-    (12, 41.3388, -75.7305, "blue", None, "St. Mary’s Church Avoca")
+    (11, 41.3395, -75.7280, "Elves", None, "Avoca Municipal Building"),
+    (12, 41.3388, -75.7305, "Skylords", None, "St. Mary’s Church Avoca")
     ]   
 
     players = [
-        (1, "John", 50000, 0)
+        (1, "John", "Skylords", 50000, 0)
     ]
 
     for p in portals:
@@ -101,7 +102,7 @@ def migrate():
 
     for p in players:
         cursor.execute("""
-            INSERT OR REPLACE INTO players (id, name, energy, experience)
+            INSERT OR REPLACE INTO players (id, name, player_faction, energy, experience)
             VALUES (?, ?, ?, ?)
         """, p)
 
