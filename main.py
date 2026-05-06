@@ -103,7 +103,7 @@ def migrate():
     for p in players:
         cursor.execute("""
             INSERT OR REPLACE INTO players (id, name, player_faction, energy, experience)
-            VALUES (?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?)
         """, p)
 
     conn.commit()
