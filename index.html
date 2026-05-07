@@ -209,20 +209,17 @@ function updatePlayerMarker() {
     playerLat += 0.0005 * Math.cos(t);
     playerLon += 0.0005 * Math.sin(t);
     t += 0.3;
-    playerMarker.setLatLng([playerLat, playerLon]);
-    recalcPortalEligibility();
 /*
         navigator.geolocation.getCurrentPosition(pos => {
         playerLat = pos.coords.latitude;
         playerLon = pos.coords.longitude;
+*/
         if (!playerMarker) {
            playerMarker = L.marker([playerLat, playerLon]).addTo(map);
         } else {
            playerMarker.setLatLng([playerLat, playerLon]);
         }
         recalcPortalEligibility();
-    });
-*/ 
 }
 
   function recalcPortalEligibility() {
