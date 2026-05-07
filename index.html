@@ -25,25 +25,86 @@
   transform: translateX(-50%);
   z-index: 1000;
 
-  background: rgba(255,255,255,0.95);
-  padding: 12px;
-  border-radius: 12px;
+  width: 92%;
+  max-width: 420px;
 
-  width: 90%;
-  max-width: 400px;
+  padding: 16px;
 
-  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(25,25,35,0.92),
+      rgba(10,10,18,0.95)
+    );
+
+  border: 1px solid rgba(0,255,255,0.25);
+
+  box-shadow:
+    0 0 20px rgba(0,255,255,0.15),
+    0 8px 30px rgba(0,0,0,0.45);
+
+  backdrop-filter: blur(10px);
+
+  color: white;
   font-family: Arial, sans-serif;
-  text-align: center;
-} 
-
-.capture-eligible {
-    color:gold;
 }
 
-@keyframes pulse {
-  0%   { filter: drop-shadow(0 0 2px gold); }
-  100% { color: drop-shadow(0 0 2px gold); }
+.hud-header {
+  margin-bottom: 14px;
+}
+
+#playerName {
+  font-size: 22px;
+  font-weight: bold;
+  color: #00ffff;
+  text-shadow: 0 0 8px rgba(0,255,255,0.6);
+}
+
+#playerFaction {
+  margin-top: 4px;
+  font-size: 14px;
+  color: #bbbbbb;
+}
+
+.stat-bar {
+  display: flex;
+  justify-content: space-between;
+
+  margin-top: 10px;
+  padding: 10px 12px;
+
+  border-radius: 10px;
+
+  background: rgba(255,255,255,0.06);
+
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.stat-bar span:first-child {
+  color: #aaaaaa;
+}
+
+.stat-bar span:last-child {
+  font-weight: bold;
+  color: #ffffff;
+}
+
+#status {
+  margin-top: 14px;
+
+  padding: 10px;
+
+  border-radius: 10px;
+
+  background: rgba(0,255,120,0.15);
+  border: 1px solid rgba(0,255,120,0.35);
+
+  color: #66ff99;
+  font-weight: bold;
+  text-align: center;
+  letter-spacing: 1px;
 }    
  </style>
 </head>
@@ -51,13 +112,23 @@
 <body>
 <div id="map"></div>
 <div id="ui">
-  <div id="playerName"></div>
-  <div id="playerFaction"></div>
-  <div id="playerEnergy"></div>
-  <div id="playerXP"></div>
-  <div id="status">Ready</div></div>
-</div> 
-<script>
+  <div class="hud-header">
+    <div id="playerName">John</div>
+    <div id="playerFaction">Skylords</div>
+  </div>
+
+  <div class="stat-bar">
+    <span>⚡ Energy</span>
+    <span id="playerEnergy">87</span>
+  </div>
+
+  <div class="stat-bar">
+    <span>⭐ XP</span>
+    <span id="playerXP">1240</span>
+  </div>
+
+  <div id="status">READY</div>
+</div><script>
 
 var myplayerfaction; playerName;
  const map = L.map('map').setView([41.4, -75.7], 12);
