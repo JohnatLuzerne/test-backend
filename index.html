@@ -160,9 +160,9 @@ let playerLon = -75.6624;
 let portalLayer = L.layerGroup().addTo(map);
 let playerMarker = null;
 var saveportals = [];  
-
+let t = 0;
 setInterval(updatePlayerMarker, 5000);
-setInterval(loadPortals, 60000);
+//setInterval(loadPortals, 60000);
   
 function distance(lat1, lon1, lat2, lon2) {
   return (lat1 - lat2)**2 + (lon1 - lon2)**2;
@@ -206,6 +206,12 @@ function canCapture(p) {
 }
   
 function updatePlayerMarker() {
+    playerLat += 0.0005 * Math.cos(t);
+    playerLon += 0.0005 * Math.sin(t);
+    t += 0.3;
+    playerMarker.setLatLng([playerLat, playerLon]);
+    recalcPortalEligibility();
+/*
         navigator.geolocation.getCurrentPosition(pos => {
         playerLat = pos.coords.latitude;
         playerLon = pos.coords.longitude;
@@ -216,13 +222,44 @@ function updatePlayerMarker() {
         }
         recalcPortalEligibility();
     });
- 
+*/ 
 }
 
   function recalcPortalEligibility() {
-      saveportals.forEach(p => {
-      });
-  }
+      data.portals.forEach(p => {
+      const eligible = canCapture(p);
+        const color =
+          p.controlled_by === "Knights" ? "red" :
+          p.controlled_by === "Skylords" ? "blue" :
+          p.controlled_by === "Elves" ? "green" :
+          "gray";
+
+        if (eligible) {
+           p.marker.setStyle({ fillColor: 'gold' });    
+          
+           let newHTML = `
+             Name ${p.portal_name}<br>
+             Owner ${p.portal_owner}<br>
+             Faction: ${p.controlled_by || "none"}<br>
+             `;
+             newHTML += `<button onclick="capture(${p.id})">Capture</button>`;
+             p.marker.setPopupContent(newHTML);    
+
+      } else {
+
+              p.marker.setStyle({ fillColor: color }); // or faction color
+
+              let newHTML = `
+              Name ${p.portal_name}<br>
+              Owner ${p.portal_owner}<br>
+              Faction: ${p.controlled_by || "none"}<br>
+              `;
+
+              p.marker.setPopupContent(newHTML);
+        } // eligible if then else
+        
+      }); // for each loop
+  } // end of function def
   
 async function loadPortals() {
   const res = await fetch('/state');
