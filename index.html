@@ -131,6 +131,7 @@
 </div><script>
 
 var myplayerfaction; playerName;
+const data;
  const map = L.map('map').setView([41.4, -75.7], 12);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -180,7 +181,7 @@ async function capture(portalId) {
   `/capture?portal_id=${portalId}&lat=${playerLat}&lon=${playerLon}&faction=${myplayerfaction}&owner=${playerName}`
   );  
 
-    const data = await res.json();
+    data = await res.json();
     console.log(data);
 
     document.getElementById("status").innerText = data.status;
