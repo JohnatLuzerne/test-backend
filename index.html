@@ -168,8 +168,11 @@
 <div id="droneButton">DRONE</div>
 <script>
 
-const btn = document.getElementById("droneButton");
-btn.style.display = "block";
+
+document.addEventListener("DOMContentLoaded", () => {
+    const btn = document.getElementById("droneButton");
+    btn.style.display = "block";
+});
   
 var myplayerfaction; playerName;
 let data = null;
