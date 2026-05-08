@@ -157,6 +157,9 @@ loadPlayer();
 
 let playerLat = 41.4089;
 let playerLon = -75.6624;
+playLat = 41.3100; 
+playerLon = -75.7898;
+flag = "right";  
 let radius = .001;  
 
  
@@ -211,9 +214,15 @@ function canCapture(p) {
   
 
 function updatePlayerMarker() {
-  playerLat = 41.4023; 
-  playerLon = -75.6245
-  /*
+  if (flag == "right") {
+      playerLat += .005;
+      if (playerLat > 41.3400) flag = "left";
+  } else {
+      playLat -= .005;
+      if (playLat < 41.3100) flag = "right";
+  }
+  
+    
     playerLat += radius * Math.cos(t);
     playerLon += radius * Math.sin(t);
     t += 0.4;
