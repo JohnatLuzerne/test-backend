@@ -157,7 +157,7 @@ loadPlayer();
 
 let playerLat = 41.4089;
 let playerLon = -75.6624;
-playLat = 41.3400; 
+playLat = 41.3600; 
 playerLon = -75.7898;
 flag = "down";  
 let radius = .001;  
@@ -216,10 +216,10 @@ function canCapture(p) {
 function updatePlayerMarker() {
   if (flag == "up") {
       playerLat += .005;
-      if (playerLat > 41.3400) flag = "down";
+      if (playerLat > 41.3600) flag = "down";
   } else {
       playerLat -= .005;
-      if (playerLat < 41.3100) flag = "up";
+      if (playerLat < 41.2800) flag = "up";
   }
   
     /*
