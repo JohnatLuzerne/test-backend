@@ -159,7 +159,7 @@ let playerLat = 41.4089;
 let playerLon = -75.6624;
 playLat = 41.3400; 
 playerLon = -75.7898;
-flag = "left";  
+flag = "down";  
 let radius = .001;  
 
  
@@ -214,12 +214,12 @@ function canCapture(p) {
   
 
 function updatePlayerMarker() {
-  if (flag == "right") {
+  if (flag == "up") {
       playerLat += .005;
-      if (playerLat > 41.3400) flag = "left";
+      if (playerLat > 41.3400) flag = "down";
   } else {
-      playLat -= .005;
-      if (playLat < 41.3100) flag = "right";
+      playerLat -= .005;
+      if (playerLat < 41.3100) flag = "up";
   }
   
     /*
