@@ -133,7 +133,7 @@
 </div><script>
 
 var myplayerfaction; playerName;
-let data;
+let data = null;
  const map = L.map('map').setView([41.4, -75.7], 12);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -267,7 +267,7 @@ function updatePlayerMarker() {
   
 async function loadPortals() {
   const res = await fetch('/state');
-  const data = await res.json();
+  data = await res.json();
 
   portalLayer.clearLayers();
   data.portals.forEach(p => {
