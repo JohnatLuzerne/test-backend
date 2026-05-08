@@ -164,7 +164,7 @@ let portalLayer = L.layerGroup().addTo(map);
 let playerMarker = null;
 var saveportals = [];  
 let t = 0;
-setInterval(updatePlayerMarker, 5000);
+
 //setInterval(loadPortals, 60000);
   
 function distance(lat1, lon1, lat2, lon2) {
@@ -303,6 +303,7 @@ async function loadPortals() {
     p.marker = marker;
   });
   console.log(data.portals);
+  setInterval(updatePlayerMarker, 5000);
 }
 
 updatePlayerMarker();
