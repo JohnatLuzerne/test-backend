@@ -46,10 +46,21 @@
   color: #111;
 }
 
-.hud-header {
+.hud-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+    
+  .hud-header {
   margin-bottom: 14px;
 }
-
+    
+ .player-info {
+      display: flex;
+      flex-direction: column;
+}
+    
 #playerName {
   font-size: 22px;
   font-weight: bold;
@@ -106,31 +117,19 @@
 
   letter-spacing: 1px;
 }   
-    
+
 #droneButton {
-  position: absolute;
-  bottom: 90px; /* sits just above your HUD */
-  right: 15px;
+  padding: 8px 12px;
 
-  padding: 12px 16px;
-
-  border-radius: 12px;
+  border-radius: 10px;
   border: 2px solid #222;
 
-  background: rgba(255,255,255,0.9);
-
-  color: #111;
+  background: white;
   font-weight: bold;
-  font-size: 14px;
-
-  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
 
   cursor: pointer;
-
-  display: none; /* hidden by default */
-
-  transition: transform 0.1s, box-shadow 0.1s;
 }
+    
 
 #droneButton:hover {
   transform: scale(1.05);
@@ -159,25 +158,21 @@
 
 <body>
 <div id="map"></div>
-<div id="ui">
-  <div class="hud-header">
-    <div id="playerName">John</div>
-    <div id="playerFaction">Skylords</div>
+
+  <div id="ui">
+  <div class="hud-top">
+    <div class="player-info">
+      <div id="playerName"></div>
+      <div id="playerFaction"></div>
+    </div>
+
+    <div id="droneButton">DRONE</div>
   </div>
 
-  <div class="stat-bar">
-    <span>⚡ Energy</span>
-    <span id="playerEnergy">87</span>
-  </div>
-
-  <div class="stat-bar">
-    <span>⭐ XP</span>
-    <span id="playerXP">1240</span>
-  </div>
-
-  <div id="status">READY</div>
-  <div id="droneButton">DRONE</div>
-  </div>
+  <div id="playerEnergy">⚡ Energy/div>
+  <div id="playerXP">⭐ XP</div>
+  <div id="status">Ready</div>
+</div>
   
 <script>
 
@@ -270,6 +265,7 @@ function canCapture(p) {
   
 
 function updatePlayerMarker() {
+  /*
   if (flag == "up") {
       playerLat += .005;
       if (playerLat > 41.3600) flag = "down";
@@ -277,6 +273,7 @@ function updatePlayerMarker() {
       playerLat -= .005;
       if (playerLat < 41.2800) flag = "up";
   }
+  */
   
     /*
     playerLat += radius * Math.cos(t);
