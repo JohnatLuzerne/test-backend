@@ -157,6 +157,7 @@ loadPlayer();
 
 let playerLat = 41.4089;
 let playerLon = -75.6624;
+let radius = .001;  
 
  
 
@@ -208,10 +209,13 @@ function canCapture(p) {
   return d < 0.0005;
 }
   
+
 function updatePlayerMarker() {
-    playerLat += 0.005 * Math.cos(t);
-    playerLon += 0.005 * Math.sin(t);
-    t += 0.5;
+    radius += 0.0005;
+    playerLat += radius * Math.cos(t);
+    playerLon += radius * Math.sin(t);
+    t += 0.4;
+}   
 /*
         navigator.geolocation.getCurrentPosition(pos => {
         playerLat = pos.coords.latitude;
