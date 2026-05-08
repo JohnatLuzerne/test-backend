@@ -249,10 +249,9 @@ function updatePlayerMarker() {
           p.controlled_by === "Skylords" ? "blue" :
           p.controlled_by === "Elves" ? "green" :
           "gray";
-
+      
         if (eligible) {
-           p.marker.setStyle({ fillColor: 'gold' });    
-          
+           p.marker.setStyle({ fillColor: 'gold', radius: 12, weight: 6 });              
            let newHTML = `
              Name ${p.portal_name}<br>
              Owner ${p.portal_owner}<br>
@@ -263,8 +262,7 @@ function updatePlayerMarker() {
 
       } else {
 
-              p.marker.setStyle({ fillColor: color }); // or faction color
-
+              p.marker.setStyle({ fillColor: color, radius: 10, weight: 2 }); // or faction color
               let newHTML = `
               Name ${p.portal_name}<br>
               Owner ${p.portal_owner}<br>
