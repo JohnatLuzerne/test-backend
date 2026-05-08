@@ -209,9 +209,9 @@ function canCapture(p) {
 }
   
 function updatePlayerMarker() {
-    playerLat += 0.0005 * Math.cos(t);
-    playerLon += 0.0005 * Math.sin(t);
-    t += 0.3;
+    playerLat += 0.005 * Math.cos(t);
+    playerLon += 0.005 * Math.sin(t);
+    t += 0.5;
 /*
         navigator.geolocation.getCurrentPosition(pos => {
         playerLat = pos.coords.latitude;
