@@ -136,11 +136,23 @@
   transform: scale(1.05);
 }
 
-#droneButton:active {
-  transform: scale(0.95);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-}
+#droneButton {
+  position: absolute;
 
+  top: -15px;   /* slightly above the HUD */
+  right: 10px;  /* right edge */
+
+  padding: 8px 12px;
+
+  border-radius: 10px;
+  border: 2px solid #222;
+
+  background: white;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+    
 </style>
 </head>
 
@@ -163,14 +175,15 @@
   </div>
 
   <div id="status">READY</div>
-</div>
+  <div id="droneButton">🛰</div>
+  </div>
   
-<div id="droneButton">DRONE</div>
 <script>
 
 
 document.addEventListener("DOMContentLoaded", () => {
     const btn = document.getElementById("droneButton");
+    btn.style.visibility = "visible";   
     btn.style.display = "block";
 });
   
