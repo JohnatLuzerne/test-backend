@@ -211,10 +211,13 @@ function canCapture(p) {
   
 
 function updatePlayerMarker() {
-    radius += 0.0005;
+  playerLat = 41.4023; 
+  playerLon = -75.6245
+  /*
     playerLat += radius * Math.cos(t);
     playerLon += radius * Math.sin(t);
     t += 0.4;
+    */
  
 /*
         navigator.geolocation.getCurrentPosition(pos => {
