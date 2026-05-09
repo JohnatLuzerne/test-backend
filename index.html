@@ -19,6 +19,7 @@
 }
   
 /* ===== HUD CONTAINER ===== */
+
 .hud {
   position: absolute;
   bottom: 12px;
@@ -28,18 +29,17 @@
 
   width: min(92%, 420px);
 
-  background: rgba(255,255,255,0.88);
-  backdrop-filter: blur(6px);
+  background: rgba(245, 247, 244, 0.75); /* subtle green-gray tint */
+  backdrop-filter: blur(8px);
 
-  border: 1.5px solid rgba(0,0,0,0.25);
+  border: 1px solid rgba(0,0,0,0.2);
   border-radius: 16px;
 
-  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.2);
 
   padding: 10px;
-  font-family: Arial, sans-serif;
 }
-
+    
 /* ===== GRID ===== */
 .grid-container {
   display: grid;
@@ -47,17 +47,15 @@
   gap: 6px;
 }
 
-/* ===== CELLS ===== */
 .grid-item {
-  background: rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.35);  /* 👈 MUCH lighter */
   padding: 6px 8px;
 
   border-radius: 10px;
-  border: 1px solid rgba(0,0,0,0.15);
+  border: 1px solid rgba(0,0,0,0.1);
 
   font-size: 14px;
 }
-
 /* ===== PLAYER INFO ===== */
 .player-info {
   display: flex;
@@ -66,8 +64,10 @@
 
   font-weight: 600;
   line-height: 1.2;
-}
+  border-left: 4px solid #4a90e2; /* default blue */
+  padding-left: 6px;}
 
+    
 /* ===== FULL ROWS ===== */
 .full-row {
   grid-column: 1 / -1;
@@ -85,19 +85,19 @@
 }
 
 /* ===== DRONE BUTTON ===== */
+
 #droneButton {
   padding: 6px 10px;
 
-  border-radius: 10px;
-  border: 1.5px solid rgba(0,0,0,0.4);
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.3);
 
-  background: rgba(255,255,255,0.85);
+  background: rgba(255,255,255,0.6);
 
   cursor: pointer;
-  transition: all 0.15s ease;
 }
-
-#droneButton:hover {
+    
+  #droneButton:hover {
   background: #f0f0f0;
 }
 
@@ -109,11 +109,18 @@
 
 /* ===== DRONE CONTROLS (hidden for now) ===== */
 #droneControls {
-  display: none;
+  visibility: hidden;
   justify-content: center;
   align-items: center;
 }
 
+#playerEnergy {
+  background: rgba(255, 235, 59, 0.25); /* soft yellow */
+}
+
+#playerXP {
+  background: rgba(33, 150, 243, 0.2); /* soft blue */
+}
 /* ===== MOBILE ===== */
 @media (max-width: 480px) {
   .hud {
@@ -155,12 +162,16 @@
       <div id="droneButton">🛰</div>
     </div>
 
-    <!-- Row 2 -->
-    <div class="grid-item full-row" id="playerEnergy">50000</div>
 
-    <!-- Row 3 -->
-    <div class="grid-item full-row" id="playerXP">0</div>
+    <div class="grid-item full-row" id="playerEnergy">
+    <span class="label">Energy:</span>
+    <span class="value" id="energyValue">50000</span>
+    </div>
 
+   <div class="grid-item full-row" id="playerXP">
+   <span class="label">XP:</span>
+   <span class="value" id="xpValue">0</span>
+   </div>
     <!-- Row 4 -->
     <div class="grid-item full-row" id="status">Ready</div>
 
@@ -190,8 +201,9 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   console.log(player);
   document.getElementById("playerName").innerText = player.name;
   document.getElementById("playerFaction").innerText = player.player_faction;
-  document.getElementById("playerEnergy").innerText = player.energy;
-  document.getElementById("playerXP").innerText = player.experience;
+  document.getElementById("energyValue").innerText = player.energy;
+  document.getElementById("xpValue").innerText = player.experience;   
+    
   myplayerfaction = player.player_faction; 
   playerName = player.name;
   }  
