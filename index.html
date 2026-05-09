@@ -28,17 +28,17 @@
 
   width: min(92%, 600px);
 
-  /* KEY CHANGE: translucent + blended */
-  background: rgba(230, 255, 230, 0.35);
-  backdrop-filter: blur(8px) saturate(120%);
+  /* KEY CHANGE: no blur, slightly stronger opacity */
+  background: rgba(210, 230, 210, 0.85);
 
   border-radius: 16px;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+  border: 1px solid rgba(0,0,0,0.15);
+
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 
   padding: 10px;
 }
-
-/* ===== GRID ===== */
+    /* ===== GRID ===== */
 .grid-container {
   display: grid;
   grid-template-columns: 1fr 1fr auto;
