@@ -18,8 +18,7 @@
   width: 100%;
 }
   
-/* ===== HUD CONTAINER ===== */
-
+/* ===== HUD CONTAINER ===== *//* ===== HUD CONTAINER ===== */
 .hud {
   position: absolute;
   bottom: 12px;
@@ -28,47 +27,50 @@
   z-index: 1000;
 
   width: min(92%, 600px);
-/*
-  background: rgb(196, 214, 168)  backdrop-filter: blur(8px);
-*/
-  background: rgb(230, 255, 230) backdrop-filter: blur(8px);
-  border: 1px solid rgba(0,0,0,0.2);
-  border-radius: 16px;
 
+  /* KEY CHANGE: translucent + blended */
+  background: rgba(230, 255, 230, 0.35);
+  backdrop-filter: blur(8px) saturate(120%);
+
+  border-radius: 16px;
   box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+
   padding: 10px;
 }
-    
+
 /* ===== GRID ===== */
 .grid-container {
   display: grid;
   grid-template-columns: 1fr 1fr auto;
   gap: 6px;
-  background: rgb(230, 255, 230);
-  border: 5px solid rgba(50,50,80, .2);
 
+  /* subtle inner border instead of thick frame */
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
+}
+
+/* ===== GRID ITEMS ===== */
 .grid-item {
-  background: rgba(255,255,255,0.35);  /* 👈 MUCH lighter */
+  background: rgba(255,255,255,0.25);
   padding: 6px 8px;
 
   border-radius: 10px;
   border: 1px solid rgba(0,0,0,0.1);
 
-  font-size: 24px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 600;
 }
+
 /* ===== PLAYER INFO ===== */
 .player-info {
   display: flex;
   flex-direction: column;
   justify-content: center;
 
-  font-weight: 600;
   line-height: 1.2;
-  border-left: 4px solid #4a90e2; /* default blue */
-  padding-left: 6px;}
+  border-left: 3px solid #4a90e2;
+  padding-left: 6px;
+}
 
-    
 /* ===== FULL ROWS ===== */
 .full-row {
   grid-column: 1 / -1;
@@ -86,44 +88,60 @@
 }
 
 /* ===== DRONE BUTTON ===== */
-
 #droneButton {
   padding: 6px 10px;
 
   border-radius: 8px;
-  border: 1px solid rgba(0,0,0,0.3);
+  border: 1px solid rgba(0,0,0,0.25);
 
-  background: rgba(255,255,255,0.6);
+  background: rgba(255,255,255,0.4);
 
   cursor: pointer;
+  transition: background 0.2s ease;
 }
-    
-  #droneButton:hover {
-  background: #f0f0f0;
+
+#droneButton:hover {
+  background: rgba(255,255,255,0.6);
 }
 
 /* READY STATE */
 #droneButton.ready {
   border-color: #2e7d32;
-  background: #e8f5e9;
+  background: rgba(200, 255, 200, 0.5);
 }
 
-/* ===== DRONE CONTROLS (hidden for now) ===== */
+/* ===== DRONE CONTROLS ===== */
 #droneControls {
   visibility: hidden;
+  display: flex;
   justify-content: center;
   align-items: center;
 }
 
+/* ===== ENERGY BAR STYLE ===== */
 #playerEnergy {
-  background: rgba(255, 235, 59, 0.25); /* soft yellow */
-  font-size: 24px; /* <--- Add this line to make text bigger */
-  padding: 10px;}
+  font-size: 20px;
+  padding: 10px;
 
+  background: linear-gradient(
+    to right,
+    rgba(255, 235, 59, 0.25),
+    rgba(255, 235, 59, 0.05)
+  );
+}
+
+/* ===== XP BAR STYLE ===== */
 #playerXP {
-  background: rgba(33, 150, 243, 0.2); /* soft blue */
-  font-size: 24px; /* <--- Add this line to make text bigger */
-  padding: 10px;}
+  font-size: 20px;
+  padding: 10px;
+
+  background: linear-gradient(
+    to right,
+    rgba(33, 150, 243, 0.25),
+    rgba(33, 150, 243, 0.05)
+  );
+}
+
 /* ===== MOBILE ===== */
 @media (max-width: 480px) {
   .hud {
@@ -147,7 +165,7 @@
 <body>
 
 <div id="map"></div>
-  
+
 <div class="hud">
   <div class="grid-container">
 
@@ -180,7 +198,7 @@
 
   </div>
 </div>
-
+  
 <script>
 document.addEventListener("DOMContentLoaded", () => {
     const btn = document.getElementById("droneButton");
