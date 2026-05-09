@@ -10,7 +10,7 @@
   />
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
+  
   <style>
     
 #map {
@@ -18,118 +18,154 @@
   width: 100%;
 }
   
-/* HUD container (this replaces your old #ui box) */
+/* ===== HUD CONTAINER ===== */
 .hud {
   position: absolute;
-  bottom: 15px;
+  bottom: 12px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
 
-  width: 90%;
-  max-width: 420px;
+  width: min(92%, 420px);
 
-  background: rgba(255,255,255,0.92);
-  border: 2px solid #222;
-  border-radius: 14px;
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: blur(6px);
 
-  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  border: 1.5px solid rgba(0,0,0,0.25);
+  border-radius: 16px;
 
-  padding: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+
+  padding: 10px;
   font-family: Arial, sans-serif;
 }
 
-/* Grid layout */
+/* ===== GRID ===== */
 .grid-container {
   display: grid;
-  grid-template-columns: 1fr 1fr auto; /* key change */
-  gap: 8px;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 6px;
 }
 
-/* General cells */
+/* ===== CELLS ===== */
 .grid-item {
-  background: rgba(255,255,255,0.85);
-  padding: 8px 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+  background: rgba(255,255,255,0.7);
+  padding: 6px 8px;
+
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.15);
+
   font-size: 14px;
 }
 
-/* Player info (stacked) */
+/* ===== PLAYER INFO ===== */
 .player-info {
   display: flex;
   flex-direction: column;
-  text-align: left;
-  font-weight: bold;
+  justify-content: center;
+
+  font-weight: 600;
+  line-height: 1.2;
 }
 
-/* Full width rows */
+/* ===== FULL ROWS ===== */
 .full-row {
   grid-column: 1 / -1;
   text-align: center;
+  font-weight: 500;
+
+  border-top: 1px solid rgba(0,0,0,0.08);
 }
 
-/* Drone button cell */
+/* ===== DRONE CELL ===== */
 .drone-cell {
   display: flex;
   justify-content: flex-end;
   align-items: center;
 }
 
-/* Drone button */
+/* ===== DRONE BUTTON ===== */
 #droneButton {
   padding: 6px 10px;
-  border-radius: 8px;
-  border: 2px solid #222;
-  background: #f5f5f5;
-  font-weight: bold;
+
+  border-radius: 10px;
+  border: 1.5px solid rgba(0,0,0,0.4);
+
+  background: rgba(255,255,255,0.85);
+
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
 }
 
-/* “Ready” highlight */
-#droneButton.ready {
-  background: #e8f5e9;
-  border-color: #2e7d32;
-  color: #1b5e20;
-  box-shadow: 0 0 8px rgba(0,200,0,0.4);
+#droneButton:hover {
+  background: #f0f0f0;
 }
-    
+
+/* READY STATE */
+#droneButton.ready {
+  border-color: #2e7d32;
+  background: #e8f5e9;
+}
+
+/* ===== DRONE CONTROLS (hidden for now) ===== */
+#droneControls {
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 480px) {
+  .hud {
+    width: 95%;
+    padding: 8px;
+  }
+
+  .grid-item {
+    font-size: 13px;
+    padding: 5px 6px;
+  }
+
+  #droneButton {
+    padding: 5px 8px;
+  }
+}
+
 </style>
 </head>
 
 <body>
-<div id="map"></div>
 
-  <div class="hud">
+<div class="hud">
   <div class="grid-container">
 
     <!-- Row 1 -->
     <div class="grid-item player-info">
-      <div id="playerName">Name</div>
-      <div id="playerFaction">Faction</div>
+      <div id="playerName">John</div>
+      <div id="playerFaction">Skylords</div>
     </div>
 
-    <div></div> <!-- spacer -->
+    <!-- Drone controls (hidden for now) -->
+    <div class="grid-item" id="droneControls"></div>
 
+    <!-- Drone button -->
     <div class="grid-item drone-cell">
       <div id="droneButton">🛰</div>
     </div>
 
     <!-- Row 2 -->
-    <div class="grid-item full-row" id="playerEnergy">Energy</div>
+    <div class="grid-item full-row" id="playerEnergy">50000</div>
 
     <!-- Row 3 -->
-    <div class="grid-item full-row" id="playerXP">XP</div>
+    <div class="grid-item full-row" id="playerXP">0</div>
 
     <!-- Row 4 -->
     <div class="grid-item full-row" id="status">Ready</div>
 
   </div>
-</div>  
+</div>
+
 <script>
-
-
 document.addEventListener("DOMContentLoaded", () => {
     const btn = document.getElementById("droneButton");
     btn.style.visibility = "visible";   
