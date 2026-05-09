@@ -201,7 +201,7 @@
   
 <script>
 
-var Level = 3;
+var Level = 3; var player;
 function canUseDrone() {
   return player.energy >= 50000 && Level >= 3;
 }
@@ -237,7 +237,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 // Get player info once on load 
   async function loadPlayer() {
   const res = await fetch('/player');
-  const player = await res.json();
+  player = await res.json();
   console.log(player);
   document.getElementById("playerName").innerText = player.name;
   document.getElementById("playerFaction").innerText = player.player_faction;
