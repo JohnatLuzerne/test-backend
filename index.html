@@ -201,9 +201,9 @@
   
 <script>
 
-var gameState;  
+var Level = 3;
 function canUseDrone() {
-  return gameState.energy >= 50000 && gameState.level >= 3;
+  return player.energy >= 50000 && Level >= 3;
 }
 
 function updateDroneButton() {
@@ -222,11 +222,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const btn = document.getElementById("droneButton");
     btn.style.visibility = "visible";   
     btn.style.display = "block";
-  gameState = {
-  energy: 40000,  // try changing this later
-  level: 2        // try changing this too
-};
-updateDroneButton();  
+ 
 });
   
 var myplayerfaction; playerName;
@@ -250,6 +246,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     
   myplayerfaction = player.player_faction; 
   playerName = player.name;
+  updateDroneButton(); 
   }  
 loadPlayer();
 
