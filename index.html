@@ -89,7 +89,16 @@
 
 /* ===== DRONE BUTTON ===== */
 #droneButton {
+  appearance: none;
+  -webkit-appearance: none;
+
   padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.25);
+  background: rgba(255,255,255,0.4);
+
+  cursor: pointer;
+}  padding: 6px 10px;
 
   border-radius: 8px;
   border: 1px solid rgba(0,0,0,0.25);
@@ -180,8 +189,7 @@
 
     <!-- Drone button -->
     <div class="grid-item drone-cell">
-      <div id="droneButton">DRONE</div>
-    </div>
+    <button id="droneButton" type="button">DRONE</button></div>
 
 
     <div class="grid-item full-row" id="playerEnergy">
