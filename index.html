@@ -287,32 +287,32 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
   function setLevel() {
   switch (true) {
-  case (player.experience < 1000:
+  case (player.experience < 1000):
     player.level = 1;
     break; // Stops execution and exits the switch
-  case (player.experience < 5000:
+  case (player.experience < 5000):
     player.level = 2;
     break;
-  case (player.experience < 10000:
+  case (player.experience < 10000):
     player.level = 3;
     break; // Stops execution and exits the switch
-  case (player.experience < 50000:
+  case (player.experience < 50000):
     player.level = 4;
     break;
-  case (player.experience < 100000:
+  case (player.experience < 100000):
     player.level = 5;
     break; // Stops execution and exits the switch
-  case (player.experience < 500000:
+  case (player.experience < 500000):
     player.level = 6;
     break;     
-  case (player.experience < 1000000:
+  case (player.experience < 1000000):
     player.level = 7;
     break;      
   default:
     // Runs if no cases match
     player.level = 8;
-}
-  }
+   }
+ }
 loadPlayer();
 
 let playerLat = 41.4089;
