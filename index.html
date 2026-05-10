@@ -208,8 +208,7 @@
 </div>
   
 <script>
-
-var Level = 2; var player;
+var player;
 var gameState = {
   droneDeployed: false
 };
@@ -249,7 +248,7 @@ document.getElementById("droneButton").addEventListener("click", () => {
     }
     return;
   }  
-  // Deploy
+  alert("we are deploying dude");
   gameState.droneDeployed = true;
   status.textContent = "DRONE DEPLOYED";
     
