@@ -210,8 +210,10 @@
 <script>
 
 var Level = 2; var player;
-var gameState;  
-gameState.droneDeployed = false;  
+var gameState = {
+  droneDeployed: false
+};
+  
 function canUseDrone() {
   return player.energy >= 50000 && Level >= 3;
 }
