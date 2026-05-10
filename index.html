@@ -210,6 +210,7 @@
 <script>
 
 var Level = 2; var player;
+var gameState;  
 function canUseDrone() {
   return player.energy >= 50000 && Level >= 3;
 }
@@ -227,24 +228,27 @@ function updateDroneButton() {
 }
 
 document.getElementById("droneButton").addEventListener("click", () => {
-  if (!droneDeployed) {
-    const status = document.getElementById("playerStatus");
+  const status = document.getElementById("playerStatus");
 
-    if (!canUseDrone()) {
-      if (gameState.energy < 50000) {
-        status.textContent = "Need 50,000 energy.";
-      } else if (gameState.level < 3) {
-        status.textContent = "Reach Level 3 to unlock drone.";
-      }
-      // Eligible case go ahead and DO IT LARRY 
-      status.textContent = "DRONE DEPLOYED";
-      droneDeployed = True;
-  }  else { // The drone was already deployed: this button is a TOGGLE Larry !
-      status.textContent = "DRONE RETURNED";
-      droneDeployed = False;
+  // Toggle OFF
+  if (gameState.droneDeployed) {
+    gameState.droneDeployed = false;
+    status.textContent = "DRONE RETURNED";
+    return;
   }
+
+  // Check eligibility using player data
+  if (!canUseDrone()) {
+    if (player.energy < 50000) {
+      status.textContent = "Need 50,000 energy.";
+    } else if (player.level < 3) {
+      status.textContent = "Reach Level 3 to unlock drone.";
+    }
+    return;
+  // Deploy
+  gameState.droneDeployed = true;
+  status.textContent = "DRONE DEPLOYED";
 });  
-  
 document.addEventListener("DOMContentLoaded", () => {
     const btn = document.getElementById("droneButton");
     btn.style.visibility = "visible";   
