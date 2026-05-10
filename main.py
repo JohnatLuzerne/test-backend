@@ -112,7 +112,7 @@ def migrate():
     ]   
 
     players = [
-        (1, "John", "Skylords", 50000, 0)
+        (1, "John", "Skylords", 50, 100000)
     ]
 
     for p in portals:
