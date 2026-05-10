@@ -245,10 +245,13 @@ document.getElementById("droneButton").addEventListener("click", () => {
       status.textContent = "Reach Level 3 to unlock drone.";
     }
     return;
+  }  
   // Deploy
   gameState.droneDeployed = true;
   status.textContent = "DRONE DEPLOYED";
-});  
+    
+}); 
+  
 document.addEventListener("DOMContentLoaded", () => {
     const btn = document.getElementById("droneButton");
     btn.style.visibility = "visible";   
