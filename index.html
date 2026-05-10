@@ -238,6 +238,7 @@ function updateDroneButton() {
 
 document.getElementById("droneButton").addEventListener("click", () => {
   const status = document.getElementById("status");
+  var controls = document.getElementById("droneControls");
 
   // Toggle OFF
   if (gameState.droneDeployed) {
