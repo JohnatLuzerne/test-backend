@@ -243,7 +243,8 @@ document.getElementById("droneButton").addEventListener("click", () => {
   if (gameState.droneDeployed) {
     gameState.droneDeployed = false;
     status.textContent = "DRONE RETURNED";
-    controls.style.visibility = gameState.droneDeployed ? "visible" : "hidden";});     return;
+    controls.style.visibility = gameState.droneDeployed ? "visible" : "hidden";     
+  return;
   }
 
   // Check eligibility using player data
@@ -258,7 +259,8 @@ document.getElementById("droneButton").addEventListener("click", () => {
   alert("we are deploying dude");
   gameState.droneDeployed = true;
   status.textContent = "DRONE DEPLOYED";
-  controls.style.visibility = gameState.droneDeployed ? "visible" : "hidden";}); 
+  controls.style.visibility = gameState.droneDeployed ? "visible" : "hidden"; 
+}
   
 document.addEventListener("DOMContentLoaded", () => {
     const btn = document.getElementById("droneButton");
