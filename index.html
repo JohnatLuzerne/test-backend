@@ -266,6 +266,15 @@ function updateDroneButton() {
   }
 }
 
+  const MIN_ZOOM = 10; // don't let drone land too far out
+  const MAX_ZOOM = 18;
+  
+document.getElementById('dronePower').addEventListener('click', () => {
+  if (gameState.droneDeployed) {
+    map.setZoom(Math.min(map.getZoom() + 1, MAX_ZOOM));
+  }
+});
+  
 let droneHeading = 0;
 
 document.getElementById('droneLeft').addEventListener('click', () => {
@@ -369,10 +378,18 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   playerName = player.name;
   loadPortals();  
   setLevel();  
-  updateDroneButton(); 
+  updateDroneButton();   
+    
+  const gravityInterval = setInterval(() => {
+  if (gameState.droneDeployed) {
+    map.setZoom(Math.max(map.getZoom() - 1, MIN_ZOOM));
+  } else {
+    clearInterval(gravityInterval);
+  }
+}, 60000);
+    
+} // end of loadPlayer
   
-  }  
-
   function setLevel() {
   switch (true) {
   case (player.experience < 1000):
