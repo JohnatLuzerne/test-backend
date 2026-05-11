@@ -305,7 +305,7 @@ document.getElementById('droneDown').addEventListener('click', () => {
 });
 
   function convert(bearingIn) {
-     var bearingOut = 90 - bearingIn;
+     var bearingOut = 90 + bearingIn;
      if (bearingOut < 0) bearingOut += 360;
      return bearingOut;
   }
