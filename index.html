@@ -286,21 +286,29 @@ const stepSize = 0.005; // roughly 50 meters, tune to taste
 
 document.getElementById('droneUp').addEventListener('click', () => {
   if (gameState.droneDeployed) {
+  var newangle = convert(droneHeading);  
   const center = map.getCenter();
-  const dLng = stepSize * Math.cos(droneHeading * Math.PI / 180);
-  const dLat = stepSize * Math.sin(droneHeading * Math.PI / 180);
+  const dLng = stepSize * Math.cos(newAngle * Math.PI / 180);
+  const dLat = stepSize * Math.sin(newAngle * Math.PI / 180);
   map.setView([center.lat + dLat, center.lng + dLng]);
   }
 });
 
 document.getElementById('droneDown').addEventListener('click', () => {
   if (gameState.droneDeployed) {  
+  var newangle = convert(droneHeading); 
   const center = map.getCenter();
-  const dLng = stepSize * Math.cos(droneHeading * Math.PI / 180);
-  const dLat = stepSize * Math.sin(droneHeading * Math.PI / 180);
+  const dLng = stepSize * Math.cos(newAngle * Math.PI / 180);
+  const dLat = stepSize * Math.sin(newAngle * Math.PI / 180);
   map.setView([center.lat - dLat, center.lng - dLng]);
   }
 });
+
+  function convert(bearingIn) {
+     var bearingOut = 90 - bearingIn;
+     if (bearingOut < 0) bearingOut += 360;
+     return beaingOut;
+  }
 
 document.getElementById("droneButton").addEventListener("click", () => {
   const status = document.getElementById("status");
