@@ -275,6 +275,26 @@ document.getElementById('droneLeft').addEventListener('click', () => {
   }  
 });
 
+const stepSize = 0.0005; // roughly 50 meters, tune to taste
+
+document.getElementById('droneUp').addEventListener('click', () => {
+  if (gameState.droneDeployed) {
+  const center = map.getCenter();
+  const dLat = stepSize * Math.cos(droneHeading * Math.PI / 180);
+  const dLng = stepSize * Math.sin(droneHeading * Math.PI / 180);
+  map.setView([center.lat + dLat, center.lng + dLng]);
+  }
+});
+
+document.getElementById('droneDown').addEventListener('click', () => {
+  if (gameState.droneDeployed) {  
+  const center = map.getCenter();
+  const dLat = stepSize * Math.cos(droneHeading * Math.PI / 180);
+  const dLng = stepSize * Math.sin(droneHeading * Math.PI / 180);
+  map.setView([center.lat - dLat, center.lng - dLng]);
+  }
+});
+  
 document.getElementById('droneRight').addEventListener('click', () => {
    if (gameState.droneDeployed) {
      droneHeading = (droneHeading + 15) % 360;
@@ -285,7 +305,7 @@ document.getElementById('droneRight').addEventListener('click', () => {
 document.getElementById("droneButton").addEventListener("click", () => {
   const status = document.getElementById("status");
   var controls = document.getElementById("droneControls");
-
+  
   // Toggle OFF
   if (gameState.droneDeployed) {
     gameState.droneDeployed = false;
