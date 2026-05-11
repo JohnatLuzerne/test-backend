@@ -266,6 +266,22 @@ function updateDroneButton() {
   }
 }
 
+let droneHeading = 0;
+
+document.getElementById('droneLeft').addEventListener('click', () => {
+  if (gameState.droneDeployed) {
+      droneHeading = (droneHeading - 15 + 360) % 360;
+      map.setBearing(droneHeading);
+  }  
+});
+
+document.getElementById('droneRight').addEventListener('click', () => {
+   if (gameState.droneDeployed) {
+     droneHeading = (droneHeading + 15) % 360;
+     map.setBearing(droneHeading);
+   }
+});
+  
 document.getElementById("droneButton").addEventListener("click", () => {
   const status = document.getElementById("status");
   var controls = document.getElementById("droneControls");
@@ -325,7 +341,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   playerName = player.name;
   setLevel();  
   updateDroneButton(); 
-  map.setBearing(45);
+  
   }  
 
   function setLevel() {
