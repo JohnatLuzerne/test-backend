@@ -286,7 +286,7 @@ const stepSize = 0.005; // roughly 50 meters, tune to taste
 
 document.getElementById('droneUp').addEventListener('click', () => {
   if (gameState.droneDeployed) {
-  var newangle = convert(droneHeading);  
+  var newAngle = convert(droneHeading);  
   const center = map.getCenter();
   const dLng = stepSize * Math.cos(newAngle * Math.PI / 180);
   const dLat = stepSize * Math.sin(newAngle * Math.PI / 180);
@@ -296,7 +296,7 @@ document.getElementById('droneUp').addEventListener('click', () => {
 
 document.getElementById('droneDown').addEventListener('click', () => {
   if (gameState.droneDeployed) {  
-  var newangle = convert(droneHeading); 
+  var newAngle = convert(droneHeading); 
   const center = map.getCenter();
   const dLng = stepSize * Math.cos(newAngle * Math.PI / 180);
   const dLat = stepSize * Math.sin(newAngle * Math.PI / 180);
