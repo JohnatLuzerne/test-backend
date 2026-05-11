@@ -275,6 +275,13 @@ document.getElementById('droneLeft').addEventListener('click', () => {
   }  
 });
 
+  document.getElementById('droneRight').addEventListener('click', () => {
+   if (gameState.droneDeployed) {
+     droneHeading = (droneHeading + 15) % 360;
+     map.setBearing(droneHeading);
+   }
+});
+  
 const stepSize = 0.005; // roughly 50 meters, tune to taste
 
 document.getElementById('droneUp').addEventListener('click', () => {
@@ -294,14 +301,7 @@ document.getElementById('droneDown').addEventListener('click', () => {
   map.setView([center.lat - dLat, center.lng - dLng]);
   }
 });
-  
-document.getElementById('droneRight').addEventListener('click', () => {
-   if (gameState.droneDeployed) {
-     droneHeading = (droneHeading + 15) % 360;
-     map.setBearing(droneHeading);
-   }
-});
-  
+
 document.getElementById("droneButton").addEventListener("click", () => {
   const status = document.getElementById("status");
   var controls = document.getElementById("droneControls");
@@ -359,6 +359,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     
   myplayerfaction = player.player_faction; 
   playerName = player.name;
+  loadPortals();  
   setLevel();  
   updateDroneButton(); 
   
@@ -560,7 +561,6 @@ async function loadPortals() {
   setInterval(updatePlayerMarker, 5000);
 }
 
-loadPortals();  
 </script>
 
 </body>
