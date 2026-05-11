@@ -270,14 +270,14 @@ let droneHeading = 0;
 
 document.getElementById('droneLeft').addEventListener('click', () => {
   if (gameState.droneDeployed) {
-      droneHeading = (droneHeading - 15 + 360) % 360;
+      droneHeading = (droneHeading + 15 + 360) % 360;
       map.setBearing(droneHeading);
   }  
 });
 
   document.getElementById('droneRight').addEventListener('click', () => {
    if (gameState.droneDeployed) {
-     droneHeading = (droneHeading + 15) % 360;
+     droneHeading = (droneHeading - 15) % 360;
      map.setBearing(droneHeading);
    }
 });
