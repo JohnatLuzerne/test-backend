@@ -10,7 +10,7 @@
   />
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  
+  <script src="https://unpkg.com/leaflet-rotate@0.2.8/dist/leaflet-rotate-src.js"></script>  
   <style>
     
 #map {
@@ -300,9 +300,11 @@ document.addEventListener("DOMContentLoaded", () => {
  
 });
   
-var myplayerfaction; playerName;
-let data = null;
- const map = L.map('map').setView([41.4, -75.7], 12);
+const map = L.map('map', {
+  rotate: true,
+  bearing: 0
+}).setView([41.4, -75.7], 12);
+
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 19,
@@ -323,6 +325,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   playerName = player.name;
   setLevel();  
   updateDroneButton(); 
+  map.setBearing(45);
   }  
 
   function setLevel() {
