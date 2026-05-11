@@ -127,6 +127,19 @@
   align-items: center;
 }
 
+#dpadGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 4px;
+}
+
+#droneUp    { grid-column: 2; grid-row: 1; }
+#droneLeft  { grid-column: 1; grid-row: 2; }
+#dronePower { grid-column: 2; grid-row: 2; }
+#droneRight { grid-column: 3; grid-row: 2; }
+#droneDown  { grid-column: 2; grid-row: 3; } /* needs 3 rows */
+
 /* ===== ENERGY BAR STYLE ===== */
 #playerEnergy {
   font-size: 20px;
@@ -185,12 +198,15 @@
     </div>
 
     <!-- Drone controls (hidden for now) -->
-    <div class="grid-item" id="droneControls">
-    <button>←</button>
-    <button>↑</button>
-    <button>→</button>   
+  <div class="grid-item" id="droneControls">
+    <div id="dpadGrid">
+      <button id="droneUp">↑</button>
+      <button id="droneLeft">←</button>
+      <button id="dronePower">⚡</button>
+      <button id="droneRight">→</button>
+      <button id="droneDown">↓</button>
     </div>
-
+  </div>
     <!-- Drone button -->
     <div class="grid-item drone-cell">
     <button id="droneButton" type="button">DRONE</button></div>
