@@ -282,7 +282,8 @@ document.getElementById('droneLeft').addEventListener('click', () => {
    }
 });
   
-const stepSize = 0.005; // roughly 50 meters, tune to taste
+const baseStep = 0.0001;
+const stepSize = baseStep * Math.pow(2, 18 - map.getZoom());
 
 document.getElementById('droneUp').addEventListener('click', () => {
   if (gameState.droneDeployed) {
