@@ -266,13 +266,13 @@ function updateDroneButton() {
   }
 }
 
-  const MIN_ZOOM = 10; // don't let drone land too far out
-  const MAX_ZOOM = 18;
+  const MIN_ZOOM = 1; // don't let drone land too far out
+  const MAX_ZOOM = 15;
   
 document.getElementById('dronePower').addEventListener('click', () => {
-  if (gameState.droneDeployed) {
-    map.setZoom(Math.min(map.getZoom() - 1, MIN_ZOOM));
-  }
+ // if (gameState.droneDeployed) {
+ //   map.setZoom(Math.min(map.getZoom() - 1, MIN_ZOOM));
+ // }
 });
   
 let droneHeading = 0;
@@ -295,6 +295,7 @@ const baseStep = 0.001;
   
 document.getElementById('droneUp').addEventListener('click', () => {
   if (gameState.droneDeployed) {
+  map.setZoom(Math.min(map.getZoom() - .25, MIN_ZOOM));
   const stepSize = baseStep * Math.pow(2, 18 - map.getZoom());
   var newAngle = convert(droneHeading);  
   const center = map.getCenter();
@@ -355,6 +356,8 @@ document.addEventListener("DOMContentLoaded", () => {
 });
   
 const map = L.map('map', {
+  zoomSnap: 0.05,
+  zoomDelta: 0.25,
   rotate: true,
   bearing: 0
 }).setView([41.4, -75.7], 12);
@@ -383,7 +386,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     
   const gravityInterval = setInterval(() => {
   if (gameState.droneDeployed) {
-    map.setZoom(Math.min(map.getZoom() + 1, MAX_ZOOM));
+    map.setZoom(Math.min(map.getZoom() + .25, MAX_ZOOM));
   } else {
     clearInterval(gravityInterval);
   }
