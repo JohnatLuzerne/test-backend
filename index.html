@@ -303,14 +303,13 @@ document.getElementById('droneUp').addEventListener('click', () => {
       const dLat = stepSize * Math.sin(newAngle * Math.PI / 180);
       const newZoom = Math.max(map.getZoom() - .25, MIN_ZOOM);
       droneAnimating = true;
-      map.flyTo([center.lat + dLat, center.lng + dLng], newZoom, {
-           animate: true,
-           duration: 0.3
-      });
       map.once('moveend', () => {
           droneAnimating = false;
       })
-  
+        map.flyTo([center.lat + dLat, center.lng + dLng], newZoom, {
+           animate: true,
+           duration: 0.3
+      });     
   }
 });
 
