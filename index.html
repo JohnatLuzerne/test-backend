@@ -271,7 +271,7 @@ function updateDroneButton() {
   
 document.getElementById('dronePower').addEventListener('click', () => {
   if (gameState.droneDeployed) {
-    map.setZoom(Math.min(map.getZoom() + 1, MAX_ZOOM));
+    map.setZoom(Math.min(map.getZoom() - 1, MIN_ZOOM));
   }
 });
   
@@ -383,7 +383,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     
   const gravityInterval = setInterval(() => {
   if (gameState.droneDeployed) {
-    map.setZoom(Math.max(map.getZoom() - 1, MIN_ZOOM));
+    map.setZoom(Math.min(map.getZoom() + 1, MAX_ZOOM));
   } else {
     clearInterval(gravityInterval);
   }
