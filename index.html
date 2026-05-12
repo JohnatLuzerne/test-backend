@@ -291,7 +291,7 @@ document.getElementById('droneLeft').addEventListener('click', () => {
    }
 });
   
-const baseStep = 0.0001;
+const baseStep = 0.001;
   
 document.getElementById('droneUp').addEventListener('click', () => {
   if (gameState.droneDeployed) {
@@ -387,7 +387,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   } else {
     clearInterval(gravityInterval);
   }
-}, 60000);
+}, 10000);
     
 } // end of loadPlayer
   
