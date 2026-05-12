@@ -240,6 +240,7 @@
 </div>
   
 <script>
+var droneAnimating = false;
 var player = {
     name: "",
     player_faction: "",
@@ -295,13 +296,21 @@ const baseStep = 0.001;
   
 document.getElementById('droneUp').addEventListener('click', () => {
   if (gameState.droneDeployed) {
-  map.setZoom(Math.max(map.getZoom() - .25, MIN_ZOOM));
-  const stepSize = baseStep * Math.pow(2, 18 - map.getZoom());
-  var newAngle = convert(droneHeading);  
-  const center = map.getCenter();
-  const dLng = stepSize * Math.cos(newAngle * Math.PI / 180);
-  const dLat = stepSize * Math.sin(newAngle * Math.PI / 180);
-  map.setView([center.lat + dLat, center.lng + dLng]);
+      const stepSize = baseStep * Math.pow(2, 18 - map.getZoom());
+      var newAngle = convert(droneHeading); 
+      const center = map.getCenter();
+      const dLng = stepSize * Math.cos(newAngle * Math.PI / 180);
+      const dLat = stepSize * Math.sin(newAngle * Math.PI / 180);
+      const newZoom = Math.max(map.getZoom() - .25, MIN_ZOOM);
+      droneAnimating = true;
+      map.flyTo([center.lat + dLat, center.lng + dLng], newZoom, {
+           animate: true,
+           duration: 0.3
+      });
+      map.once('moveend', () => {
+          droneAnimating = false;
+      })
+  
   }
 });
 
@@ -385,7 +394,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   updateDroneButton();   
     
   const gravityInterval = setInterval(() => {
-  if (gameState.droneDeployed) {
+  if (gameState.droneDeployed && !droneAnimating) {
     map.setZoom(Math.min(map.getZoom() + .25, MAX_ZOOM));
   } else {
     clearInterval(gravityInterval);
