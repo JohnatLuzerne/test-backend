@@ -266,8 +266,8 @@ function updateDroneButton() {
   }
 }
 
-  const MIN_ZOOM = 1; // don't let drone land too far out
-  const MAX_ZOOM = 15;
+  const MIN_ZOOM = 2; // don't let drone land too far out
+  const MAX_ZOOM = 12;
   
 document.getElementById('dronePower').addEventListener('click', () => {
  // if (gameState.droneDeployed) {
@@ -295,8 +295,8 @@ const baseStep = 0.001;
   
 document.getElementById('droneUp').addEventListener('click', () => {
   if (gameState.droneDeployed) {
-  map.setZoom(Math.min(map.getZoom() - .25, MIN_ZOOM));
-  const stepSize = baseStep * Math.pow(2, 18 - map.getZoom());
+  map.setZoom(Math.max(map.getZoom() - .25, MIN_ZOOM));
+  const stepSize = baseStep * Math.pow(2, 12 - map.getZoom());
   var newAngle = convert(droneHeading);  
   const center = map.getCenter();
   const dLng = stepSize * Math.cos(newAngle * Math.PI / 180);
@@ -307,7 +307,7 @@ document.getElementById('droneUp').addEventListener('click', () => {
 
 document.getElementById('droneDown').addEventListener('click', () => {
   if (gameState.droneDeployed) {  
-  const stepSize = baseStep * Math.pow(2, 18 - map.getZoom());
+  const stepSize = baseStep * Math.pow(2, 12 - map.getZoom());
   var newAngle = convert(droneHeading); 
   const center = map.getCenter();
   const dLng = stepSize * Math.cos(newAngle * Math.PI / 180);
